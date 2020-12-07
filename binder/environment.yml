@@ -8,5 +8,4 @@ dependencies:
 - ipywidgets=7
 - jupyterlab=3
 - jupyterlab_widgets=1
-- python=3.9
 - nodejs
