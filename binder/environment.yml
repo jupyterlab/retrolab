@@ -8,4 +8,6 @@ dependencies:
 - ipywidgets=7
 - jupyterlab=3
 - jupyterlab_widgets=1
+- matplotlib
+- numpy
 - nodejs
