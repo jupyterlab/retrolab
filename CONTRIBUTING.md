@@ -31,7 +31,7 @@ pip install -e .
 jlpm run build
 ```
 
-To make sure the `jupyterlab_classic` server extension is installed with:
+To make sure the `jupyterlab_classic` server extension is installed:
 
 ```bash
 $ jupyter server extension list
