@@ -1,7 +1,10 @@
 on:
+  # TODO: switch back to tag
   push:
     branches:
       - main
+  pull_request:
+    branches: '*'
 
 jobs:
   release:
@@ -23,14 +26,12 @@ jobs:
         pip install setuptools wheel twine jupyter-packaging~=0.7.9 jupyterlab~=3.0
     - name: Build the package
       run: |
-        # TODO: uncomment
-        echo "publish to PyPI"
-        # python setup.py sdist bdist_wheel
-    - name: Publish a Python distribution to PyPI
-      uses: pypa/gh-action-pypi-publish@master
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
+        python setup.py sdist bdist_wheel
+    # - name: Publish a Python distribution to PyPI
+    #   uses: pypa/gh-action-pypi-publish@master
+    #   with:
+    #     user: __token__
+    #     password: ${{ secrets.PYPI_API_TOKEN }}
     - name: Publish to npm
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -39,3 +40,10 @@ jobs:
         # TODO: uncomment
         echo "publish to npm"
         # jlpm run lerna publish from-package --yes
+    - name: Generate Changelog
+      env:
+        CHANGELOG_GITHUB_TOKEN: ${{ secrets.CHANGELOG_GITHUB_TOKEN }}
+      run: |
+        docker run -it --rm -v "$(pwd)":/usr/local/src/your-app ferrarimarco/github-changelog-generator \
+          github_changelog_generator -u jtpio -p jupyterlab-classic --since-tag 0.1.2 --no-issues
+
