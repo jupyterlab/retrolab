@@ -1,6 +1,7 @@
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
 
 jobs:
   release:
@@ -22,7 +23,9 @@ jobs:
         pip install setuptools wheel twine jupyter-packaging~=0.7.9 jupyterlab~=3.0
     - name: Build the package
       run: |
-        python setup.py sdist bdist_wheel
+        # TODO: uncomment
+        echo "publish to PyPI"
+        # python setup.py sdist bdist_wheel
     - name: Publish a Python distribution to PyPI
       uses: pypa/gh-action-pypi-publish@master
       with:
@@ -33,4 +36,6 @@ jobs:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-        jlpm run lerna publish from-package --yes
+        # TODO: uncomment
+        echo "publish to npm"
+        # jlpm run lerna publish from-package --yes
