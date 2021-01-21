@@ -18,6 +18,9 @@ jlpm release:bump minor
 
 # for a major version bump
 jlpm release:bump major
+
+# push to the main branch
+git push origin main --tags
 ```
 
 We follow a similar bump strategy as in JupyterLab: https://github.com/jupyterlab/jupyterlab/blob/master/RELEASE.md#bump-version
