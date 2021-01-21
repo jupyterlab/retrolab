@@ -46,10 +46,22 @@ jobs:
       env:
         CHANGELOG_GITHUB_TOKEN: ${{ secrets.CHANGELOG_GITHUB_TOKEN }}
       run: |
-        prev_tag=`git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1)`
+        prev_tag=`git describe --abbrev=0 --tags "$(git rev-list --tags --skip=1 --max-count=1)"`
         docker run --rm -v "$(pwd)":/usr/local/src/your-app \
           -e CHANGELOG_GITHUB_TOKEN=${CHANGELOG_GITHUB_TOKEN} \
           ferrarimarco/github-changelog-generator \
           github_changelog_generator -u jtpio -p jupyterlab-classic usernames-as-github-logins --no-issues --no-unreleased \
-          --since-tag ${prev_tag}
+          --since-tag ${prev_tag} --header "## Changes"
+    # - name: Create Release
+    #   id: create_release
+    #   uses: actions/create-release@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     tag_name: ${{ github.ref }}
+    #     release_name: ${{ github.ref }}
+    #     body_path: CHANGELOG.md
+    #     # TODO: set to fals
+    #     draft: true
+    #     prerelease: false
 
