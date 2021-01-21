@@ -50,16 +50,16 @@ jobs:
         # TODO: uncomment
         echo "publish to npm"
         # jlpm run lerna publish from-package --yes
+    - name: Get the current tag
+      id: current_tag
+      run: |
+        tag=`git describe --abbrev=0 --tags $(git rev-list --tags --max-count=1)`
+        echo "::set-output name=tag::${tag}"
     - name: Get the previous tag
       id: previous_tag
       run: |
-        # TODO: fetch the real tag
         tag=`git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1)`
         echo "::set-output name=tag::${tag}"
-    - name: TMP
-      run: |
-        git rev-list --tags --skip=1 --max-count=1
-        git rev-list --tags
     - name: Generate Changelog
       env:
         CHANGELOG_GITHUB_TOKEN: ${{ secrets.CHANGELOG_GITHUB_TOKEN }}
@@ -69,16 +69,16 @@ jobs:
           ferrarimarco/github-changelog-generator \
           github_changelog_generator -u jtpio -p jupyterlab-classic usernames-as-github-logins --no-issues --no-unreleased \
           --since-tag ${{ steps.previous_tag.outputs.tag }} --header "## Changes"
-    # - name: Create Release
-    #   id: create_release
-    #   uses: actions/create-release@v1
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   with:
-    #     tag_name: ${{ github.ref }}
-    #     release_name: ${{ github.ref }}
-    #     body_path: CHANGELOG.md
-    #     # TODO: set to fals
-    #     draft: true
-    #     prerelease: false
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.current_tag.outputs.tag }}
+        release_name: ${{ steps.current_tag.outputs.tag }}
+        body_path: CHANGELOG.md
+        # TODO: set to false
+        draft: true
+        prerelease: false
 
