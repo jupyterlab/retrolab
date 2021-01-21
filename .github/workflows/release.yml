@@ -79,7 +79,7 @@ jobs:
         tag_name: ${{ steps.current_tag.outputs.tag }}
         release_name: ${{ steps.current_tag.outputs.tag }}
         body_path: CHANGELOG
-        # TODO: set to false
+        # TODO: set to false?
         draft: true
         prerelease: false
 
