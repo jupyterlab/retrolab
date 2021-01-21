@@ -14,6 +14,7 @@ defaults:
 
 jobs:
   release:
+    # if: startsWith(github.ref, ‘refs/tags/’)
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -68,7 +69,7 @@ jobs:
           -e CHANGELOG_GITHUB_TOKEN=${CHANGELOG_GITHUB_TOKEN} \
           ferrarimarco/github-changelog-generator \
           github_changelog_generator -u jtpio -p jupyterlab-classic --usernames-as-github-logins --no-issues --no-unreleased \
-          --since-tag ${{ steps.previous_tag.outputs.tag }} --header ""
+          --since-tag ${{ steps.previous_tag.outputs.tag }} --header "" --pr-label "## Changes"
         head -n -1 CHANGELOG.md > CHANGELOG
     - name: Create Release
       id: create_release
