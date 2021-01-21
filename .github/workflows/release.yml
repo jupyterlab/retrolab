@@ -160,7 +160,7 @@ jobs:
     - name: Copy to ./dist
       run: |
         mkdir dist/
-        cp ./tmp/jupyterlab-classic*.tar.gz ./tmp/jupyterlab-classic*.whl dist
+        cp ./tmp/jupyterlab-classic*.tar.gz ./tmp/jupyterlab_classic*.whl dist
         ls dist
     - name: Install node
       uses: actions/setup-node@v1
