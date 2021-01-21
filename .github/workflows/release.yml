@@ -156,9 +156,11 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: dist ${{ github.run_number }}
-        path: ./dist
-    - name: TMP
+        path: ./tmp
+    - name: Copy to ./dist
       run: |
+        mkdir dist/
+        cp ./tmp/jupyterlab-classic*.tar.gz ./tmp/jupyterlab-classic*.whl dist
         ls dist
     - name: Install node
       uses: actions/setup-node@v1
