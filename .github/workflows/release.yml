@@ -42,11 +42,14 @@ jobs:
         # TODO: uncomment
         echo "publish to npm"
         # jlpm run lerna publish from-package --yes
+    - name: TMP
+      run: |
+        git rev-list --tags --skip=1 --max-count=1
     - name: Generate Changelog
       env:
         CHANGELOG_GITHUB_TOKEN: ${{ secrets.CHANGELOG_GITHUB_TOKEN }}
       run: |
-        prev_tag=`git describe --abbrev=0 --tags "$(git rev-list --tags --skip=1 --max-count=1)"`
+        prev_tag=`git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1)`
         docker run --rm -v "$(pwd)":/usr/local/src/your-app \
           -e CHANGELOG_GITHUB_TOKEN=${CHANGELOG_GITHUB_TOKEN} \
           ferrarimarco/github-changelog-generator \
