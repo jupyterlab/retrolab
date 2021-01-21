@@ -47,5 +47,6 @@ jobs:
         CHANGELOG_GITHUB_TOKEN: ${{ secrets.CHANGELOG_GITHUB_TOKEN }}
       run: |
         docker run --rm -v "$(pwd)":/usr/local/src/your-app ferrarimarco/github-changelog-generator \
-          github_changelog_generator -u jtpio -p jupyterlab-classic --since-tag 0.1.2 --no-issues --no-unreleased
+          github_changelog_generator -u jtpio -p jupyterlab-classic usernames-as-github-logins --no-issues --no-unreleased \
+          --since-tag 0.1.2
 
