@@ -25,6 +25,8 @@ git push origin main --tags
 
 We follow a similar bump strategy as in JupyterLab: https://github.com/jupyterlab/jupyterlab/blob/master/RELEASE.md#bump-version
 
+The release workflow also creates a GitHub release with the new changes generated with [github-changelog-generator](https://github.com/github-changelog-generator/github-changelog-generator).
+
 If you would still like to do the release manually instead, read below.
 
 ## Making a nanual new release of JupyterLab Classic
