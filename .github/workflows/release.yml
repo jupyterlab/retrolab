@@ -69,7 +69,7 @@ jobs:
           ferrarimarco/github-changelog-generator \
           github_changelog_generator -u jtpio -p jupyterlab-classic --usernames-as-github-logins --no-issues --no-unreleased \
           --since-tag ${{ steps.previous_tag.outputs.tag }} --header ""
-        head -n -2 CHANGELOG.md > CHANGELOG
+        head -n -1 CHANGELOG.md > CHANGELOG
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
