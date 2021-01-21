@@ -14,7 +14,19 @@ defaults:
     shell: bash -l {0}
 
 jobs:
+  integrity:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Build checksum file
+      run: |
+        sed -n 17,146p .github/workflows/build.yml > build
+        sed -n 17,146p .github/workflows/release.yml > release
+        diff build release
+
   test:
+    needs: [integrity]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -49,6 +61,7 @@ jobs:
         jlpm run test
 
   build:
+    needs: [integrity]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
