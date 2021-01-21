@@ -54,7 +54,8 @@ jobs:
       id: previous_tag
       run: |
         # TODO: fetch the real tag
-        echo "::set-output name=tag::0.1.2"
+        tag=`git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1)`
+        echo "::set-output name=tag::${tag}"
     - name: TMP
       run: |
         git rev-list --tags --skip=1 --max-count=1
