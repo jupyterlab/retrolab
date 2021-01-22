@@ -84,6 +84,7 @@ jobs:
         python setup.py sdist bdist_wheel
     - name: Build npm distributions
       run: |
+        mkdir pkgs
         jlpm lerna exec -- npm pack
         cp packages/*/*.tgz pkgs
     - name: Build checksum file
