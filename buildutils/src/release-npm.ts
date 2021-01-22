@@ -15,7 +15,7 @@ commander
   .option('--dry-run', 'Run in dry-run mode')
   .action((options: any) => {
     const dryRun = options.dryRun ?? false;
-    const distDir = resolve(__dirname, options.dist);
+    const distDir = resolve(options.dist);
     const files = readdirSync(distDir);
     files.forEach(file => {
       if (!file.endsWith('.tgz')) {
