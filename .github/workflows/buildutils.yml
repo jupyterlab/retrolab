@@ -11,7 +11,7 @@ defaults:
     shell: bash -l {0}
 
 jobs:
-  scripts:
+  versioning:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -34,14 +34,6 @@ jobs:
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
-    - name: Publish to npm in dry-run mode
-      run: |
-        mkdir dist
-        jlpm lerna exec -- npm pack
-        cp packages/*/*.tgz dist
-        jlpm release:npm --dist ./dist --dry-run
-        rm -r dist
-        git checkout .
     - name: Reset version
       run: |
         # TODO: improve this with a mock package?
@@ -67,3 +59,15 @@ jobs:
     - name: Major Release
       run: |
         jlpm release:bump major --force
+
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Publish to npm in dry-run mode
+      run: |
+        mkdir dist
+        jlpm lerna exec -- npm pack
+        cp packages/*/*.tgz dist
+        jlpm release:npm --dist ./dist --dry-run
