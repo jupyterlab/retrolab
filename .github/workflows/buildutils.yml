@@ -40,6 +40,7 @@ jobs:
         jlpm lerna exec -- npm pack
         cp packages/*/*.tgz dist
         jlpm release:npm --dist ./dist --dry-run
+        rm -r dist
     - name: Reset version
       run: |
         # TODO: improve this with a mock package?
