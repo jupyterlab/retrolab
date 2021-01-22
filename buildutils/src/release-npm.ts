@@ -23,7 +23,6 @@ commander
       }
       const tarball = resolve(distDir, file);
       run(`npm publish ${tarball} ${dryRun ? '--dry-run' : ''}`);
-      console.log(file);
     });
   });
 
