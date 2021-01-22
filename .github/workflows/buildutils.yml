@@ -34,6 +34,11 @@ jobs:
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
+    - name: Publish to npm in dry-run mode
+      run: |
+        jlpm lerna exec -- npm pack
+        cp packages/*/*.tgz dist
+        jlpm release:npm --dist ./dist --dry-run
     - name: Reset version
       run: |
         # TODO: improve this with a mock package?
@@ -59,8 +64,3 @@ jobs:
     - name: Major Release
       run: |
         jlpm release:bump major --force
-    - name: Publish to npm in dry-run mode
-      run: |
-        jlpm lerna exec -- npm pack
-        cp packages/*/*.tgz dist
-        jlpm release:npm --dist ./dist --dry-run
