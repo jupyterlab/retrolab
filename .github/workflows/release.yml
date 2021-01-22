@@ -196,7 +196,7 @@ jobs:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
         npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
-        jlpm release:npm --dist ./pkgs --dry-run
+        jlpm release:npm --dist ./pkgs
     - name: Get the current tag
       id: current_tag
       run: |
