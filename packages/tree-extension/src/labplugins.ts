@@ -1,4 +1,6 @@
 // Vendored from https://github.com/jupyterlab/jupyterlab/pull/9667
+// TODO: delete this file
+
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 /**
