@@ -1,0 +1,16 @@
+name: End-to-end tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: '*'
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
