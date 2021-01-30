@@ -6,6 +6,7 @@ from jupyter_server.extension.handler import (
     ExtensionHandlerMixin,
     ExtensionHandlerJinjaMixin,
 )
+from jupyter_server.serverapp import ServerApp
 from jupyter_server.utils import url_path_join as ujoin, url_escape
 from jupyterlab.commands import get_app_dir, get_user_settings_dir, get_workspaces_dir
 from jupyterlab_server import LabServerApp
@@ -116,6 +117,14 @@ class ClassicApp(NBClassicConfigShimMixin, LabServerApp):
     workspaces_dir = get_workspaces_dir()
 
     def initialize_handlers(self):
+        # TODO: is this explicit call needed?
+        self.serverapp.parse_command_line(self.serverapp.extra_args)
+        if self.serverapp.file_to_run:
+            relpath = os.path.relpath(self.serverapp.file_to_run, self.serverapp.root_dir)
+            uri = url_escape(ujoin(f'{self.extension_url}notebooks', *relpath.split(os.sep)))
+            self.default_url = uri
+            self.serverapp.file_to_run = ''
+
         self.handlers.append(("/classic/tree(.*)", ClassicTreeHandler))
         self.handlers.append(("/classic/notebooks(.*)", ClassicNotebookHandler))
         self.handlers.append(("/classic/edit(.*)", ClassicFileHandler))

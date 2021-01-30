@@ -85,6 +85,10 @@ setup_args = dict(
     packages=setuptools.find_packages(),
     install_requires=[
         "jupyterlab~=3.0",
+        "jupyterlab_server~=2.1",
+        "jupyter_server~=1.2",
+        "nbclassic~=0.2",
+        "tornado>=6.1.0",
     ],
     zip_safe=False,
     include_package_data=True,
