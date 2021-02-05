@@ -106,7 +106,7 @@ class ClassicApp(NBClassicConfigShimMixin, LabServerApp):
     app_name = "JupyterLab Classic"
     description = "JupyterLab Classic - A JupyterLab Distribution with the Classic Notebook look and feel"
     app_version = version
-    extension_url = "/classic/tree"
+    extension_url = "/classic"
     default_url = "/classic/tree"
     load_other_extensions = True
     app_dir = app_dir
@@ -121,8 +121,9 @@ class ClassicApp(NBClassicConfigShimMixin, LabServerApp):
         self.serverapp.parse_command_line(self.serverapp.extra_args)
         if self.serverapp.file_to_run:
             relpath = os.path.relpath(self.serverapp.file_to_run, self.serverapp.root_dir)
-            uri = url_escape(ujoin(f'{self.extension_url}notebooks', *relpath.split(os.sep)))
-            self.default_url = uri
+            uri = url_escape(ujoin(f'{self.extension_url}/notebooks', *relpath.split(os.sep)))
+            # TODO: this shouldn't be on self.serverapp?
+            self.serverapp.default_url = uri
             self.serverapp.file_to_run = ''
 
         self.handlers.append(("/classic/tree(.*)", ClassicTreeHandler))
