@@ -6,8 +6,7 @@ from jupyter_server.extension.handler import (
     ExtensionHandlerMixin,
     ExtensionHandlerJinjaMixin,
 )
-from jupyter_server.serverapp import ServerApp
-from jupyter_server.utils import url_path_join as ujoin, url_escape
+from jupyter_server.utils import url_path_join as ujoin
 from jupyterlab.commands import get_app_dir, get_user_settings_dir, get_workspaces_dir
 from jupyterlab_server import LabServerApp
 from jupyterlab_server.config import get_page_config, recursive_update, LabConfig
@@ -101,14 +100,6 @@ class ClassicNotebookHandler(ClassicHandler):
         return self.write(tpl)
 
 
-class ClassicOpenHandler(ClassicHandler):
-    @web.authenticated
-    def get(self, path=None):
-        if path.endswith('.ipynb'):
-            return self.redirect(f"/classic/notebooks/{path}")
-        return self.redirect(f'/classic/edit/{path}')
-
-
 class ClassicApp(NBClassicConfigShimMixin, LabServerApp):
     name = "classic"
     app_name = "JupyterLab Classic"
@@ -116,7 +107,7 @@ class ClassicApp(NBClassicConfigShimMixin, LabServerApp):
     app_version = version
     extension_url = "/classic"
     default_url = "/classic/tree"
-    file_url_prefix = "/classic/open"
+    file_url_prefix = "/classic/notebooks"
     load_other_extensions = True
     app_dir = app_dir
     app_settings_dir = pjoin(app_dir, "settings")
@@ -124,13 +115,20 @@ class ClassicApp(NBClassicConfigShimMixin, LabServerApp):
     themes_dir = pjoin(app_dir, "themes")
     user_settings_dir = get_user_settings_dir()
     workspaces_dir = get_workspaces_dir()
+    subcommands = {}
 
     def initialize_handlers(self):
+        self.handlers.append(
+            (
+                rf"/{self.file_url_prefix}/((?!.*\.ipynb($|\?)).*)",
+                web.RedirectHandler,
+                {"url": "/classic/edit/{0}"}
+            )
+        )
         self.handlers.append(("/classic/tree(.*)", ClassicTreeHandler))
         self.handlers.append(("/classic/notebooks(.*)", ClassicNotebookHandler))
         self.handlers.append(("/classic/edit(.*)", ClassicFileHandler))
         self.handlers.append(("/classic/terminals/(.*)", ClassicTerminalHandler))
-        self.handlers.append(("/classic/open/(.*)", ClassicOpenHandler))
         super().initialize_handlers()
 
     def initialize_templates(self):
@@ -139,6 +137,13 @@ class ClassicApp(NBClassicConfigShimMixin, LabServerApp):
         self.templates_dir = os.path.join(HERE, "templates")
         self.static_paths = [self.static_dir]
         self.template_paths = [self.templates_dir]
+
+    def initialize_settings(self):
+        super().initialize_settings()
+
+    def initialize(self, argv=None):
+        """Subclass because the ExtensionApp.initialize() method does not take arguments"""
+        super().initialize()
 
 
 main = launch_new_instance = ClassicApp.launch_instance
