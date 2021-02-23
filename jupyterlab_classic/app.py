@@ -101,6 +101,14 @@ class ClassicNotebookHandler(ClassicHandler):
         return self.write(tpl)
 
 
+class ClassicOpenHandler(ClassicHandler):
+    @web.authenticated
+    def get(self, path=None):
+        if path.endswith('.ipynb'):
+            return self.redirect(f"/classic/notebooks/{path}")
+        return self.redirect(f'/classic/edit/{path}')
+
+
 class ClassicApp(NBClassicConfigShimMixin, LabServerApp):
     name = "classic"
     app_name = "JupyterLab Classic"
@@ -108,6 +116,7 @@ class ClassicApp(NBClassicConfigShimMixin, LabServerApp):
     app_version = version
     extension_url = "/classic"
     default_url = "/classic/tree"
+    file_url_prefix = "/classic/open"
     load_other_extensions = True
     app_dir = app_dir
     app_settings_dir = pjoin(app_dir, "settings")
@@ -117,19 +126,11 @@ class ClassicApp(NBClassicConfigShimMixin, LabServerApp):
     workspaces_dir = get_workspaces_dir()
 
     def initialize_handlers(self):
-        # TODO: is this explicit call needed?
-        self.serverapp.parse_command_line(self.serverapp.extra_args)
-        if self.serverapp.file_to_run:
-            relpath = os.path.relpath(self.serverapp.file_to_run, self.serverapp.root_dir)
-            uri = url_escape(ujoin(f'{self.extension_url}/notebooks', *relpath.split(os.sep)))
-            # TODO: this shouldn't be on self.serverapp?
-            self.serverapp.default_url = uri
-            self.serverapp.file_to_run = ''
-
         self.handlers.append(("/classic/tree(.*)", ClassicTreeHandler))
         self.handlers.append(("/classic/notebooks(.*)", ClassicNotebookHandler))
         self.handlers.append(("/classic/edit(.*)", ClassicFileHandler))
         self.handlers.append(("/classic/terminals/(.*)", ClassicTerminalHandler))
+        self.handlers.append(("/classic/open/(.*)", ClassicOpenHandler))
         super().initialize_handlers()
 
     def initialize_templates(self):
