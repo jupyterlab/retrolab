@@ -19,7 +19,6 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "style": "style/index.css",
-  "styleModule": "style/index.js",
   "directories": {
     "lib": "lib/"
   },
@@ -41,17 +40,17 @@
   "dependencies": {
     "@jupyterlab-classic/application": "^0.1.10",
     "@jupyterlab-classic/ui-components": "^0.1.10",
-    "@jupyterlab/application": "^3.0.0",
-    "@jupyterlab/apputils": "^3.0.0",
-    "@jupyterlab/celltags": "^3.0.0",
-    "@jupyterlab/codeeditor": "^3.0.0",
-    "@jupyterlab/codemirror": "^3.0.0",
-    "@jupyterlab/coreutils": "^5.0.0",
-    "@jupyterlab/docmanager": "^3.0.0",
-    "@jupyterlab/docregistry": "^3.0.0",
-    "@jupyterlab/mainmenu": "^3.0.0",
-    "@jupyterlab/settingregistry": "^3.0.0",
-    "@jupyterlab/translation": "^3.0.0",
+    "@jupyterlab/application": "^3.1.0-alpha.8",
+    "@jupyterlab/apputils": "^3.1.0-alpha.8",
+    "@jupyterlab/celltags": "^3.1.0-alpha.8",
+    "@jupyterlab/codeeditor": "^3.1.0-alpha.8",
+    "@jupyterlab/codemirror": "^3.1.0-alpha.8",
+    "@jupyterlab/coreutils": "^5.1.0-alpha.8",
+    "@jupyterlab/docmanager": "^3.1.0-alpha.8",
+    "@jupyterlab/docregistry": "^3.1.0-alpha.8",
+    "@jupyterlab/mainmenu": "^3.1.0-alpha.8",
+    "@jupyterlab/settingregistry": "^3.1.0-alpha.8",
+    "@jupyterlab/translation": "^3.1.0-alpha.8",
     "@lumino/widgets": "^1.14.0"
   },
   "devDependencies": {
@@ -63,5 +62,6 @@
   },
   "jupyterlab": {
     "extension": true
-  }
+  },
+  "styleModule": "style/index.js"
 }

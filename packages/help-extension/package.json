@@ -19,7 +19,6 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "style": "style/index.css",
-  "styleModule": "style/index.js",
   "directories": {
     "lib": "lib/"
   },
@@ -40,9 +39,9 @@
   },
   "dependencies": {
     "@jupyterlab-classic/ui-components": "^0.1.10",
-    "@jupyterlab/application": "^3.0.0",
-    "@jupyterlab/apputils": "^3.0.0",
-    "@jupyterlab/mainmenu": "^3.0.0"
+    "@jupyterlab/application": "^3.1.0-alpha.8",
+    "@jupyterlab/apputils": "^3.1.0-alpha.8",
+    "@jupyterlab/mainmenu": "^3.1.0-alpha.8"
   },
   "devDependencies": {
     "rimraf": "~3.0.0",
@@ -53,5 +52,6 @@
   },
   "jupyterlab": {
     "extension": true
-  }
+  },
+  "styleModule": "style/index.js"
 }
