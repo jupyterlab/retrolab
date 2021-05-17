@@ -1,0 +1,1 @@
+c.ClassicApp.collaborative = True
