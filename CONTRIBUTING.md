@@ -37,7 +37,7 @@ There is also a `watch` script to watch for changes and rebuild the app automati
 jlpm watch
 ```
 
-To make sure the `jupyterlab_classic` server extension is installed:
+To make sure the `retrolab` server extension is installed:
 
 ```bash
 $ jupyter server extension list
@@ -47,9 +47,9 @@ Config dir: /home/username/miniforge3/envs/retrolab/etc/jupyter
     jupyterlab enabled
     - Validating jupyterlab...
       jupyterlab 3.0.0 OK
-    jupyterlab_classic enabled
-    - Validating jupyterlab_classic...
-      jupyterlab_classic 0.1.0rc2 OK
+    retrolab enabled
+    - Validating retrolab...
+      retrolab 0.1.0rc2 OK
     nbclassic enabled
     - Validating nbclassic...
       nbclassic  OK

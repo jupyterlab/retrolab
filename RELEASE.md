@@ -52,10 +52,10 @@ git clean -fdx
 
 Make sure the `dist/` folder is empty.
 
-1. Update [jupyterlab_classic/\_version.py](./jupyterlab_classic/_version.py) with the new version number
+1. Update [retrolab/\_version.py](./retrolab/_version.py) with the new version number
 2. Commit the changes
 
-- `git add jupyterlab_classic/_version.py`
+- `git add retrolab/_version.py`
 - `git commit -m "Release x.y.z"`
 
 3. Bump the frontend packages:
@@ -65,7 +65,7 @@ Make sure the `dist/` folder is empty.
 
 4. Run: `python setup.py sdist bdist_wheel`
 5. Double check the size of the bundles in the `dist/` folder
-6. Test the release by installing the wheel or sdist: `python -m pip install ./dist/jupyterlab_classic-x.y.z-py3-none-any.whl
+6. Test the release by installing the wheel or sdist: `python -m pip install ./dist/retrolab-x.y.z-py3-none-any.whl
 7. `export TWINE_USERNAME=mypypi_username`
 8. `twine upload dist/*`
 

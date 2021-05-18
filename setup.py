@@ -43,12 +43,12 @@ data_files_spec = [
     (
         "etc/jupyter/jupyter_server_config.d",
         "jupyter-config/jupyter_server_config.d",
-        "jupyterlab_classic.json",
+        "retrolab.json",
     ),
     (
         "etc/jupyter/jupyter_notebook_config.d",
         "jupyter-config/jupyter_notebook_config.d",
-        "jupyterlab_classic.json",
+        "retrolab.json",
     ),
 ]
 
@@ -106,7 +106,7 @@ setup_args = dict(
         "Programming Language :: Python :: 3.9",
         "Framework :: Jupyter",
     ],
-    entry_points={"console_scripts": ["jupyter-classic = jupyterlab_classic.app:main"]},
+    entry_points={"console_scripts": ["jupyter-classic = retrolab.app:main"]},
 )
 
 

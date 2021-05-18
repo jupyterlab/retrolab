@@ -6,13 +6,13 @@ from .serverextension import load_jupyter_server_extension
 def _jupyter_server_extension_paths():
     return [
         {
-            'module': 'jupyterlab_classic'
+            'module': 'retrolab'
         }
     ]
 
 
 def _jupyter_server_extension_points():
-    return [{"module": "jupyterlab_classic", "app": ClassicApp}]
+    return [{"module": "retrolab", "app": ClassicApp}]
 
 
 def _jupyter_labextension_paths():
