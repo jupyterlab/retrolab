@@ -16,14 +16,14 @@ import { ISignal, Signal } from '@lumino/signaling';
 import { Panel, Widget, BoxLayout } from '@lumino/widgets';
 
 /**
- * The JupyterLab Classic application shell token.
+ * The RetroLab application shell token.
  */
 export const IClassicShell = new Token<IClassicShell>(
-  '@jupyterlab-classic/application:IClassicShell'
+  '@retrolab/application:IClassicShell'
 );
 
 /**
- * The JupyterLab Classic application shell interface.
+ * The RetroLab application shell interface.
  */
 export interface IClassicShell extends ClassicShell {}
 

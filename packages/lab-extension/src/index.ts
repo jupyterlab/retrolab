@@ -34,7 +34,7 @@ namespace CommandIDs {
   /**
    * Toggle Top Bar visibility
    */
-  export const openClassic = 'jupyterlab-classic:open';
+  export const openClassic = 'retrolab:open';
 }
 
 /**
@@ -55,7 +55,7 @@ class ClassicButton
    */
   createNew(panel: NotebookPanel): IDisposable {
     const button = new ToolbarButton({
-      tooltip: 'Open with JupyterLab Classic',
+      tooltip: 'Open with RetroLab',
       icon: jupyterIcon,
       onClick: () => {
         this._commands.execute(CommandIDs.openClassic);
@@ -72,7 +72,7 @@ class ClassicButton
  * A plugin for the checkpoint indicator
  */
 const openClassic: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/lab-extension:open-classic',
+  id: '@retrolab/lab-extension:open-classic',
   autoStart: true,
   optional: [INotebookTracker, ICommandPalette, IMainMenu, ILabShell],
   activate: (
@@ -84,7 +84,7 @@ const openClassic: JupyterFrontEndPlugin<void> = {
   ) => {
     // TODO: do not activate if already in a IClassicShell?
     if (!notebookTracker || !labShell) {
-      // to prevent showing the toolbar button in JupyterLab Classic
+      // to prevent showing the toolbar button in RetroLab
       return;
     }
 
@@ -99,7 +99,7 @@ const openClassic: JupyterFrontEndPlugin<void> = {
     };
 
     commands.addCommand(CommandIDs.openClassic, {
-      label: 'Open in JupyterLab Classic',
+      label: 'Open in RetroLab',
       execute: () => {
         const current = notebookTracker.currentWidget;
         if (!current) {

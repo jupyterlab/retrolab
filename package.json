@@ -1,15 +1,15 @@
 {
   "private": true,
-  "homepage": "https://github.com/jtpio/jupyterlab-classic",
+  "homepage": "https://github.com/jtpio/retrolab",
   "bugs": {
-    "url": "https://github.com/jtpio/jupyterlab-classic/issues"
+    "url": "https://github.com/jtpio/retrolab/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jtpio/jupyterlab-classic"
+    "url": "https://github.com/jtpio/retrolab"
   },
   "license": "BSD-3-Clause",
-  "author": "JupyterLab Classic Contributors",
+  "author": "RetroLab Contributors",
   "workspaces": {
     "packages": [
       "app",
@@ -38,8 +38,8 @@
     "test:ci": "(jlpm run start&) && jlpm run test:e2e",
     "update:dependency": "node ./node_modules/@jupyterlab/buildutils/lib/update-dependency.js --lerna",
     "watch": "run-p watch:lib watch:app",
-    "watch:lib": "lerna exec --stream --scope @jupyterlab-classic/metapackage jlpm watch",
-    "watch:app": "lerna exec --stream --scope \"@jupyterlab-classic/app\" jlpm watch"
+    "watch:lib": "lerna exec --stream --scope @retrolab/metapackage jlpm watch",
+    "watch:app": "lerna exec --stream --scope \"@retrolab/app\" jlpm watch"
   },
   "husky": {
     "hooks": {

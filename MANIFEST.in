@@ -1,7 +1,7 @@
 include LICENSE
 include README.md
 include pyproject.toml
-include jupyter-config/jupyterlab-classic.json
+include jupyter-config/retrolab.json
 
 include package.json
 include install.json

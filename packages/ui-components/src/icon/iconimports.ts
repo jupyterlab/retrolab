@@ -7,7 +7,7 @@ import { LabIcon } from '@jupyterlab/ui-components';
 
 import jupyterSvgstr from '../../style/icons/jupyter.svg';
 
-import jupyterlabClassicSvgstr from '../../style/icons/jupyterlab-classic.svg';
+import jupyterlabClassicSvgstr from '../../style/icons/retrolab.svg';
 
 export const jupyterIcon = new LabIcon({
   name: 'classic-ui-components:jupyter',
@@ -15,6 +15,6 @@ export const jupyterIcon = new LabIcon({
 });
 
 export const jupyterlabClassicIcon = new LabIcon({
-  name: 'classic-ui-components:jupyterlab-classic',
+  name: 'classic-ui-components:retrolab',
   svgstr: jupyterlabClassicSvgstr
 });

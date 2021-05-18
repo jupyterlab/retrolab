@@ -1,6 +1,6 @@
-# Contributing to JupyterLab Classic
+# Contributing to RetroLab
 
-Thanks for contributing to JupyterLab Classic!
+Thanks for contributing to RetroLab!
 
 Make sure to follow [Project Jupyter's Code of Conduct](https://github.com/jupyter/governance/blob/master/conduct/code_of_conduct.md)
 for a friendly and welcoming collaborative environment.
@@ -16,16 +16,16 @@ The `jlpm` command is JupyterLab's pinned version of [yarn](https://yarnpkg.com/
 
 ```bash
 # create a new environment
-mamba create -n jupyterlab-classic -c conda-forge python nodejs -y
+mamba create -n retrolab -c conda-forge python nodejs -y
 
 # activate the environment
-conda activate jupyterlab-classic
+conda activate retrolab
 
 # Install package in development mode
 pip install -e .
 ```
 
-`jupyterlab-classic` follows a monorepo structure. To build all the packages at once:
+`retrolab` follows a monorepo structure. To build all the packages at once:
 
 ```bash
 jlpm build
@@ -43,7 +43,7 @@ To make sure the `jupyterlab_classic` server extension is installed:
 $ jupyter server extension list
 Config dir: /home/username/.jupyter
 
-Config dir: /home/username/miniforge3/envs/jupyterlab-classic/etc/jupyter
+Config dir: /home/username/miniforge3/envs/retrolab/etc/jupyter
     jupyterlab enabled
     - Validating jupyterlab...
       jupyterlab 3.0.0 OK
@@ -57,7 +57,7 @@ Config dir: /home/username/miniforge3/envs/jupyterlab-classic/etc/jupyter
 Config dir: /usr/local/etc/jupyter
 ```
 
-Then start JupyterLab Classic with:
+Then start RetroLab with:
 
 ```bash
 jupyter classic

@@ -18,7 +18,7 @@ import {
   App,
   ClassicShell,
   IClassicShell
-} from '@jupyterlab-classic/application';
+} from '@retrolab/application';
 
 import { Poll } from '@lumino/polling';
 
@@ -48,7 +48,7 @@ const KERNEL_STATUS_FADE_OUT_CLASS = 'jp-ClassicKernelStatus-fade';
  * A plugin for the checkpoint indicator
  */
 const checkpoints: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/application-extension:checkpoints',
+  id: '@retrolab/application-extension:checkpoints',
   autoStart: true,
   requires: [IDocumentManager],
   optional: [IClassicShell],
@@ -103,7 +103,7 @@ const checkpoints: JupyterFrontEndPlugin<void> = {
  * The kernel logo plugin.
  */
 const kernelLogo: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/application-extension:kernel-logo',
+  id: '@retrolab/application-extension:kernel-logo',
   autoStart: true,
   requires: [IClassicShell],
   activate: (app: JupyterFrontEnd, shell: IClassicShell) => {
@@ -156,7 +156,7 @@ const kernelLogo: JupyterFrontEndPlugin<void> = {
  * A plugin to display the kernel status;
  */
 const kernelStatus: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/application-extension:kernel-status',
+  id: '@retrolab/application-extension:kernel-status',
   autoStart: true,
   requires: [IClassicShell],
   activate: (app: JupyterFrontEnd, shell: IClassicShell) => {
@@ -210,13 +210,13 @@ const kernelStatus: JupyterFrontEndPlugin<void> = {
 };
 
 /**
- * The default paths for a JupyterLab Classic app.
+ * The default paths for a RetroLab app.
  */
 const paths: JupyterFrontEndPlugin<JupyterFrontEnd.IPaths> = {
-  id: '@jupyterlab-classic/application-extension:paths',
+  id: '@retrolab/application-extension:paths',
   activate: (app: JupyterFrontEnd): JupyterFrontEnd.IPaths => {
     if (!(app instanceof App)) {
-      throw new Error(`${paths.id} must be activated in JupyterLab Classic.`);
+      throw new Error(`${paths.id} must be activated in RetroLab.`);
     }
     return app.paths;
   },
@@ -225,10 +225,10 @@ const paths: JupyterFrontEndPlugin<JupyterFrontEnd.IPaths> = {
 };
 
 /**
- * The default JupyterLab Classic application shell.
+ * The default RetroLab application shell.
  */
 const shell: JupyterFrontEndPlugin<IClassicShell> = {
-  id: '@jupyterlab-classic/application-extension:shell',
+  id: '@retrolab/application-extension:shell',
   activate: (app: JupyterFrontEnd) => {
     if (!(app.shell instanceof ClassicShell)) {
       throw new Error(`${shell.id} did not find a ClassicShell instance.`);

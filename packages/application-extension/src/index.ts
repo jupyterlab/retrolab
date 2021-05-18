@@ -29,9 +29,9 @@ import {
   App,
   ClassicShell,
   IClassicShell
-} from '@jupyterlab-classic/application';
+} from '@retrolab/application';
 
-import { jupyterIcon } from '@jupyterlab-classic/ui-components';
+import { jupyterIcon } from '@retrolab/ui-components';
 
 import { Widget } from '@lumino/widgets';
 
@@ -79,7 +79,7 @@ namespace CommandIDs {
  * The logo plugin.
  */
 const logo: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/application-extension:logo',
+  id: '@retrolab/application-extension:logo',
   autoStart: true,
   activate: (app: JupyterFrontEnd) => {
     const baseUrl = PageConfig.getBaseUrl();
@@ -104,7 +104,7 @@ const logo: JupyterFrontEndPlugin<void> = {
  * A plugin to open documents in the main area.
  */
 const opener: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/application-extension:opener',
+  id: '@retrolab/application-extension:opener',
   autoStart: true,
   requires: [IRouter, IDocumentManager],
   activate: (
@@ -149,7 +149,7 @@ const opener: JupyterFrontEndPlugin<void> = {
  * A plugin to dispose the Tabs menu
  */
 const noTabsMenu: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/application-extension:no-tabs-menu',
+  id: '@retrolab/application-extension:no-tabs-menu',
   requires: [IMainMenu],
   autoStart: true,
   activate: (app: JupyterFrontEnd, menu: IMainMenu) => {
@@ -161,7 +161,7 @@ const noTabsMenu: JupyterFrontEndPlugin<void> = {
  * Add commands to open the tree and running pages.
  */
 const pages: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/application-extension:pages',
+  id: '@retrolab/application-extension:pages',
   autoStart: true,
   optional: [ICommandPalette, IMainMenu],
   activate: (
@@ -201,15 +201,15 @@ const pages: JupyterFrontEndPlugin<void> = {
 };
 
 /**
- * The default paths for a JupyterLab Classic app.
+ * The default paths for a RetroLab app.
  */
 const paths: JupyterFrontEndPlugin<JupyterFrontEnd.IPaths> = {
-  id: '@jupyterlab-classic/application-extension:paths',
+  id: '@retrolab/application-extension:paths',
   autoStart: true,
   provides: JupyterFrontEnd.IPaths,
   activate: (app: JupyterFrontEnd): JupyterFrontEnd.IPaths => {
     if (!(app instanceof App)) {
-      throw new Error(`${paths.id} must be activated in JupyterLab Classic.`);
+      throw new Error(`${paths.id} must be activated in RetroLab.`);
     }
     return app.paths;
   }
@@ -219,7 +219,7 @@ const paths: JupyterFrontEndPlugin<JupyterFrontEnd.IPaths> = {
  * The default URL router provider.
  */
 const router: JupyterFrontEndPlugin<IRouter> = {
-  id: '@jupyterlab-classic/application-extension:router',
+  id: '@retrolab/application-extension:router',
   autoStart: true,
   provides: IRouter,
   requires: [JupyterFrontEnd.IPaths],
@@ -244,17 +244,17 @@ const router: JupyterFrontEndPlugin<IRouter> = {
  * The default session dialogs plugin
  */
 const sessionDialogs: JupyterFrontEndPlugin<ISessionContextDialogs> = {
-  id: '@jupyterlab-classic/application-extension:session-dialogs',
+  id: '@retrolab/application-extension:session-dialogs',
   provides: ISessionContextDialogs,
   autoStart: true,
   activate: () => sessionContextDialogs
 };
 
 /**
- * The default JupyterLab Classic application shell.
+ * The default RetroLab application shell.
  */
 const shell: JupyterFrontEndPlugin<IClassicShell> = {
-  id: '@jupyterlab-classic/application-extension:shell',
+  id: '@retrolab/application-extension:shell',
   activate: (app: JupyterFrontEnd) => {
     if (!(app.shell instanceof ClassicShell)) {
       throw new Error(`${shell.id} did not find a ClassicShell instance.`);
@@ -269,7 +269,7 @@ const shell: JupyterFrontEndPlugin<IClassicShell> = {
  * A plugin to provide a spacer at rank 10000 for flex panels
  */
 const spacer: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/application-extension:spacer',
+  id: '@retrolab/application-extension:spacer',
   autoStart: true,
   activate: (app: JupyterFrontEnd) => {
     const top = new Widget();
@@ -288,7 +288,7 @@ const spacer: JupyterFrontEndPlugin<void> = {
  * A plugin to display the document title in the browser tab title
  */
 const tabTitle: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/application-extension:tab-title',
+  id: '@retrolab/application-extension:tab-title',
   autoStart: true,
   requires: [IClassicShell],
   activate: (app: JupyterFrontEnd, shell: IClassicShell) => {
@@ -314,7 +314,7 @@ const tabTitle: JupyterFrontEndPlugin<void> = {
  * A plugin to display and rename the title of a file
  */
 const title: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/application-extension:title',
+  id: '@retrolab/application-extension:title',
   autoStart: true,
   requires: [IClassicShell],
   optional: [IDocumentManager, IRouter],
@@ -381,7 +381,7 @@ const title: JupyterFrontEndPlugin<void> = {
  * Plugin to toggle the top header visibility.
  */
 const topVisibility: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/application-extension:top',
+  id: '@retrolab/application-extension:top',
   requires: [IClassicShell],
   optional: [IMainMenu],
   activate: (
@@ -422,7 +422,7 @@ const topVisibility: JupyterFrontEndPlugin<void> = {
  * A simplified Translator
  */
 const translator: JupyterFrontEndPlugin<ITranslator> = {
-  id: '@jupyterlab-classic/application-extension:translator',
+  id: '@retrolab/application-extension:translator',
   activate: (app: JupyterFrontEnd<JupyterFrontEnd.IShell>): ITranslator => {
     const translationManager = new TranslationManager();
     return translationManager;
@@ -435,7 +435,7 @@ const translator: JupyterFrontEndPlugin<ITranslator> = {
  * Zen mode plugin
  */
 const zen: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/application-extension:zen',
+  id: '@retrolab/application-extension:zen',
   autoStart: true,
   optional: [ICommandPalette, IClassicShell, IMainMenu],
   activate: (

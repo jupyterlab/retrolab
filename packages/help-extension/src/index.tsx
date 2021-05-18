@@ -10,7 +10,7 @@ import { showDialog, Dialog } from '@jupyterlab/apputils';
 
 import { IMainMenu } from '@jupyterlab/mainmenu';
 
-import { jupyterlabClassicIcon } from '@jupyterlab-classic/ui-components';
+import { jupyterlabClassicIcon } from '@retrolab/ui-components';
 
 import * as React from 'react';
 
@@ -43,7 +43,7 @@ namespace CommandIDs {
  * The help plugin.
  */
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/help-extension:plugin',
+  id: '@retrolab/help-extension:plugin',
   autoStart: true,
   optional: [IMainMenu],
   activate: (app: JupyterFrontEnd, menu: IMainMenu): void => {
@@ -117,7 +117,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
         );
 
         const classicNotebookURL =
-          'https://github.com/jtpio/jupyterlab-classic';
+          'https://github.com/jtpio/retrolab';
         const externalLinks = (
           <span>
             <a

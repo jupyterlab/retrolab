@@ -102,8 +102,8 @@ class ClassicNotebookHandler(ClassicHandler):
 
 class ClassicApp(NBClassicConfigShimMixin, LabServerApp):
     name = "classic"
-    app_name = "JupyterLab Classic"
-    description = "JupyterLab Classic - A JupyterLab Distribution with the Classic Notebook look and feel"
+    app_name = "RetroLab"
+    description = "RetroLab - A JupyterLab Distribution with the Classic Notebook look and feel"
     app_version = version
     extension_url = "/classic"
     default_url = "/classic/tree"

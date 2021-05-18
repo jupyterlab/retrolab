@@ -20,7 +20,7 @@ import { Kernel } from '@jupyterlab/services';
  * TODO: remove and use a custom doc manager?
  */
 const opener: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlab-classic/docmanager-extension:opener',
+  id: '@retrolab/docmanager-extension:opener',
   requires: [IDocumentManager],
   autoStart: true,
   activate: (app: JupyterFrontEnd, docManager: IDocumentManager) => {

@@ -1,4 +1,4 @@
-# Releasing JupyterLab Classic
+# Releasing RetroLab
 
 ## Automated releases
 
@@ -29,7 +29,7 @@ The release workflow also creates a GitHub release with the new changes generate
 
 If you would still like to do the release manually instead, read below.
 
-## Making a nanual new release of JupyterLab Classic
+## Making a nanual new release of RetroLab
 
 This process is still a bit manual and consists in running a couple of commands.
 
@@ -38,8 +38,8 @@ This process is still a bit manual and consists in running a couple of commands.
 Creating a new environment can help avoid pushing local changes and any extra tag.
 
 ```bash
-mamba create -q -y -n jupyterlab-classic-release -c conda-forge twine nodejs jupyter-packaging jupyterlab -y
-conda activate jupyterlab-classic-release
+mamba create -q -y -n retrolab-release -c conda-forge twine nodejs jupyter-packaging jupyterlab -y
+conda activate retrolab-release
 ```
 
 Alternatively, the local repository can be cleaned with:
@@ -75,7 +75,7 @@ The simplest is to wait for the bot to automatically open the PR.
 
 Alternatively, to do the update manually:
 
-1. Open a new PR on https://github.com/conda-forge/jupyterlab-classic-feedstock to update the `version` and the `sha256` hash
+1. Open a new PR on https://github.com/conda-forge/retrolab-feedstock to update the `version` and the `sha256` hash
 2. Wait for the tests
 3. Merge the PR
 

@@ -18,5 +18,5 @@ def _jupyter_server_extension_points():
 def _jupyter_labextension_paths():
     return [{
         'src': 'labextension',
-        'dest': '@jupyterlab-classic/lab-extension'
+        'dest': '@retrolab/lab-extension'
     }]

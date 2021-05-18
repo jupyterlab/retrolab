@@ -1195,11 +1195,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jupyterlab-classic/application-extension@file:packages/application-extension":
+"@retrolab/application-extension@file:packages/application-extension":
   version "0.1.10"
   dependencies:
-    "@jupyterlab-classic/application" "^0.1.10"
-    "@jupyterlab-classic/ui-components" "^0.1.10"
+    "@retrolab/application" "^0.1.10"
+    "@retrolab/ui-components" "^0.1.10"
     "@jupyterlab/application" "^3.0.0"
     "@jupyterlab/apputils" "^3.0.0"
     "@jupyterlab/celltags" "^3.0.0"
@@ -1213,7 +1213,7 @@
     "@jupyterlab/translation" "^3.0.0"
     "@lumino/widgets" "^1.14.0"
 
-"@jupyterlab-classic/application@file:packages/application":
+"@retrolab/application@file:packages/application":
   version "0.1.10"
   dependencies:
     "@jupyterlab/application" "^3.0.0"
@@ -1228,7 +1228,7 @@
     "@lumino/signaling" "^1.4.3"
     "@lumino/widgets" "^1.14.0"
 
-"@jupyterlab-classic/docmanager-extension@file:packages/docmanager-extension":
+"@retrolab/docmanager-extension@file:packages/docmanager-extension":
   version "0.1.10"
   dependencies:
     "@jupyterlab/application" "^3.0.0"
@@ -1238,18 +1238,18 @@
     "@jupyterlab/services" "^6.0.0"
     "@lumino/algorithm" "^1.3.3"
 
-"@jupyterlab-classic/help-extension@file:packages/help-extension":
+"@retrolab/help-extension@file:packages/help-extension":
   version "0.1.10"
   dependencies:
-    "@jupyterlab-classic/ui-components" "^0.1.10"
+    "@retrolab/ui-components" "^0.1.10"
     "@jupyterlab/application" "^3.0.0"
     "@jupyterlab/apputils" "^3.0.0"
     "@jupyterlab/mainmenu" "^3.0.0"
 
-"@jupyterlab-classic/lab-extension@file:packages/lab-extension":
+"@retrolab/lab-extension@file:packages/lab-extension":
   version "0.1.10"
   dependencies:
-    "@jupyterlab-classic/ui-components" "^0.1.10"
+    "@retrolab/ui-components" "^0.1.10"
     "@jupyterlab/application" "^3.0.0"
     "@jupyterlab/apputils" "^3.0.0"
     "@jupyterlab/coreutils" "^5.0.0"
@@ -1259,10 +1259,10 @@
     "@lumino/commands" "^1.11.4"
     "@lumino/disposable" "^1.4.3"
 
-"@jupyterlab-classic/notebook-extension@file:packages/notebook-extension":
+"@retrolab/notebook-extension@file:packages/notebook-extension":
   version "0.1.10"
   dependencies:
-    "@jupyterlab-classic/application" "^0.1.10"
+    "@retrolab/application" "^0.1.10"
     "@jupyterlab/application" "^3.0.0"
     "@jupyterlab/apputils" "^3.0.0"
     "@jupyterlab/docmanager" "^3.0.0"
@@ -1270,7 +1270,7 @@
     "@lumino/polling" "^1.3.3"
     "@lumino/widgets" "^1.14.0"
 
-"@jupyterlab-classic/terminal-extension@file:packages/terminal-extension":
+"@retrolab/terminal-extension@file:packages/terminal-extension":
   version "0.1.10"
   dependencies:
     "@jupyterlab/application" "^3.0.0"
@@ -1278,10 +1278,10 @@
     "@jupyterlab/terminal" "^3.0.0"
     "@lumino/algorithm" "^1.3.3"
 
-"@jupyterlab-classic/tree-extension@file:packages/tree-extension":
+"@retrolab/tree-extension@file:packages/tree-extension":
   version "0.1.10"
   dependencies:
-    "@jupyterlab-classic/application" "^0.1.10"
+    "@retrolab/application" "^0.1.10"
     "@jupyterlab/application" "^3.0.0"
     "@jupyterlab/apputils" "^3.0.0"
     "@jupyterlab/coreutils" "^5.0.0"
@@ -1297,7 +1297,7 @@
     "@lumino/commands" "^1.12.0"
     "@lumino/widgets" "^1.16.1"
 
-"@jupyterlab-classic/ui-components@file:packages/ui-components":
+"@retrolab/ui-components@file:packages/ui-components":
   version "0.1.10"
   dependencies:
     "@jupyterlab/ui-components" "^3.0.0"

@@ -41,7 +41,7 @@ export class App extends JupyterFrontEnd<IClassicShell> {
   /**
    * The name of the application.
    */
-  readonly name = 'JupyterLab Classic';
+  readonly name = 'RetroLab';
 
   /**
    * A namespace/prefix plugins may use to denote their provenance.
@@ -149,7 +149,7 @@ export namespace App {
       Partial<IInfo> {}
 
   /**
-   * The information about a JupyterLab Classic application.
+   * The information about a RetroLab application.
    */
   export interface IInfo {
     /**

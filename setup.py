@@ -1,5 +1,5 @@
 """
-jupyterlab-classic setup
+retrolab setup
 """
 import os
 
@@ -16,7 +16,7 @@ import setuptools
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 # The name of the project
-NAME = "jupyterlab-classic"
+NAME = "retrolab"
 PACKAGE_NAME = NAME.replace("-", "_")
 
 # Get our version
@@ -25,7 +25,7 @@ version = get_version(os.path.join(PACKAGE_NAME, "_version.py"))
 main_bundle_dest = os.path.join(HERE, PACKAGE_NAME, "static")
 main_bundle_source = os.path.join(HERE, "app")
 
-labext_name = "@jupyterlab-classic/lab-extension"
+labext_name = "@retrolab/lab-extension"
 lab_extension_dest = os.path.join(HERE, PACKAGE_NAME, "labextension")
 lab_extension_source = os.path.join(HERE, "packages", "lab-extension")
 
@@ -76,8 +76,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup_args = dict(
     name=NAME,
     version=version,
-    url="https://github.com/jtpio/jupyterlab-classic",
-    author="JupyterLab Classic Contributors",
+    url="https://github.com/jtpio/retrolab",
+    author="RetroLab Contributors",
     description="The next gen old-school Notebook UI",
     long_description=long_description,
     long_description_content_type="text/markdown",
