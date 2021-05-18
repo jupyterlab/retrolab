@@ -106,7 +106,7 @@ setup_args = dict(
         "Programming Language :: Python :: 3.9",
         "Framework :: Jupyter",
     ],
-    entry_points={"console_scripts": ["jupyter-classic = retrolab.app:main"]},
+    entry_points={"console_scripts": ["jupyter-retro = retrolab.app:main"]},
 )
 
 

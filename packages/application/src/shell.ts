@@ -18,14 +18,14 @@ import { Panel, Widget, BoxLayout } from '@lumino/widgets';
 /**
  * The RetroLab application shell token.
  */
-export const IClassicShell = new Token<IClassicShell>(
-  '@retrolab/application:IClassicShell'
+export const IRetroShell = new Token<IRetroShell>(
+  '@retrolab/application:IRetroShell'
 );
 
 /**
  * The RetroLab application shell interface.
  */
-export interface IClassicShell extends ClassicShell {}
+export interface IRetroShell extends RetroShell {}
 
 /**
  * The default rank for ranked panels.
@@ -35,7 +35,7 @@ const DEFAULT_RANK = 900;
 /**
  * The application shell.
  */
-export class ClassicShell extends Widget implements JupyterFrontEnd.IShell {
+export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
   constructor() {
     super();
     this.id = 'main';
@@ -78,7 +78,7 @@ export class ClassicShell extends Widget implements JupyterFrontEnd.IShell {
   /**
    * A signal emitted when the current widget changes.
    */
-  get currentChanged(): ISignal<ClassicShell, void> {
+  get currentChanged(): ISignal<RetroShell, void> {
     return this._currentChanged;
   }
 

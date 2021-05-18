@@ -150,8 +150,8 @@ jobs:
           jupyter labextension list 2>&1 | grep -ie "@retrolab/lab-extension.*enabled.*ok" -
           jupyter server extension list
           jupyter server extension list 2>&1 | grep -ie "retrolab.*enabled" -
-          jupyter classic --version
-          jupyter classic --help
+          jupyter retro --version
+          jupyter retro --help
 
   release:
     if: startsWith(github.ref, 'refs/tags/')

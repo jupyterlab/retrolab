@@ -34,16 +34,16 @@ namespace CommandIDs {
   /**
    * Toggle Top Bar visibility
    */
-  export const openClassic = 'retrolab:open';
+  export const openRetro = 'retrolab:open';
 }
 
 /**
- * A notebook widget extension that adds a jupyterlab classic button to the toolbar.
+ * A notebook widget extension that adds a retrolab button to the toolbar.
  */
-class ClassicButton
+class RetroButton
   implements DocumentRegistry.IWidgetExtension<NotebookPanel, INotebookModel> {
   /**
-   * Instantiate a new ClassicButton.
+   * Instantiate a new RetroButton.
    * @param commands The command registry.
    */
   constructor(commands: CommandRegistry) {
@@ -58,10 +58,10 @@ class ClassicButton
       tooltip: 'Open with RetroLab',
       icon: jupyterIcon,
       onClick: () => {
-        this._commands.execute(CommandIDs.openClassic);
+        this._commands.execute(CommandIDs.openRetro);
       }
     });
-    panel.toolbar.insertAfter('cellType', 'jupyterlabClassic', button);
+    panel.toolbar.insertAfter('cellType', 'retro', button);
     return button;
   }
 
@@ -71,8 +71,8 @@ class ClassicButton
 /**
  * A plugin for the checkpoint indicator
  */
-const openClassic: JupyterFrontEndPlugin<void> = {
-  id: '@retrolab/lab-extension:open-classic',
+const openRetro: JupyterFrontEndPlugin<void> = {
+  id: '@retrolab/lab-extension:open-retro',
   autoStart: true,
   optional: [INotebookTracker, ICommandPalette, IMainMenu, ILabShell],
   activate: (
@@ -82,7 +82,7 @@ const openClassic: JupyterFrontEndPlugin<void> = {
     menu: IMainMenu | null,
     labShell: ILabShell | null
   ) => {
-    // TODO: do not activate if already in a IClassicShell?
+    // TODO: do not activate if already in a IRetroShell?
     if (!notebookTracker || !labShell) {
       // to prevent showing the toolbar button in RetroLab
       return;
@@ -98,7 +98,7 @@ const openClassic: JupyterFrontEndPlugin<void> = {
       );
     };
 
-    commands.addCommand(CommandIDs.openClassic, {
+    commands.addCommand(CommandIDs.openRetro, {
       label: 'Open in RetroLab',
       execute: () => {
         const current = notebookTracker.currentWidget;
@@ -106,27 +106,27 @@ const openClassic: JupyterFrontEndPlugin<void> = {
           return;
         }
         const { context } = current;
-        window.open(`${baseUrl}classic/notebooks/${context.path}`);
+        window.open(`${baseUrl}retro/notebooks/${context.path}`);
       },
       isEnabled
     });
 
     if (palette) {
-      palette.addItem({ command: CommandIDs.openClassic, category: 'Other' });
+      palette.addItem({ command: CommandIDs.openRetro, category: 'Other' });
     }
 
     if (menu) {
-      menu.viewMenu.addGroup([{ command: CommandIDs.openClassic }], 1);
+      menu.viewMenu.addGroup([{ command: CommandIDs.openRetro }], 1);
     }
 
-    const classicButton = new ClassicButton(commands);
-    docRegistry.addWidgetExtension('Notebook', classicButton);
+    const retroButton = new RetroButton(commands);
+    docRegistry.addWidgetExtension('Notebook', retroButton);
   }
 };
 
 /**
  * Export the plugins as default.
  */
-const plugins: JupyterFrontEndPlugin<any>[] = [openClassic];
+const plugins: JupyterFrontEndPlugin<any>[] = [openRetro];
 
 export default plugins;

@@ -41,7 +41,7 @@ const opener: JupyterFrontEndPlugin<void> = {
       }
       const ext = PathExt.extname(path);
       const route = ext === '.ipynb' ? 'notebooks' : 'edit';
-      window.open(`${baseUrl}classic/${route}/${path}`);
+      window.open(`${baseUrl}retro/${route}/${path}`);
       return undefined;
     };
   }

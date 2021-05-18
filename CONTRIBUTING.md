@@ -60,7 +60,7 @@ Config dir: /usr/local/etc/jupyter
 Then start RetroLab with:
 
 ```bash
-jupyter classic
+jupyter retro
 ```
 
 ## Running Tests

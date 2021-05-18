@@ -32,7 +32,7 @@
     "release:bump": "node ./buildutils/lib/release-bump.js",
     "release:npm": "node ./buildutils/lib/release-npm.js",
     "release:patch": "node ./buildutils/lib/release-patch.js",
-    "start": "jupyter classic --config ./app/test/jupyter_server_config.py --no-browser",
+    "start": "jupyter retro --config ./app/test/jupyter_server_config.py --no-browser",
     "test": "lerna run test",
     "test:e2e": "lerna run test:e2e --stream",
     "test:ci": "(jlpm run start&) && jlpm run test:e2e",

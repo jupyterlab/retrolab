@@ -27,8 +27,8 @@ import { ITranslator, TranslationManager } from '@jupyterlab/translation';
 
 import {
   App,
-  ClassicShell,
-  IClassicShell
+  RetroShell,
+  IRetroShell
 } from '@retrolab/application';
 
 import { jupyterIcon } from '@retrolab/ui-components';
@@ -84,7 +84,7 @@ const logo: JupyterFrontEndPlugin<void> = {
   activate: (app: JupyterFrontEnd) => {
     const baseUrl = PageConfig.getBaseUrl();
     const node = document.createElement('a');
-    node.href = `${baseUrl}classic/tree`;
+    node.href = `${baseUrl}retro/tree`;
     node.target = '_blank';
     node.rel = 'noopener noreferrer';
     const logo = new Widget({ node });
@@ -95,7 +95,7 @@ const logo: JupyterFrontEndPlugin<void> = {
       height: '28px',
       width: 'auto'
     });
-    logo.id = 'jp-ClassicLogo';
+    logo.id = 'jp-RetroLogo';
     app.shell.add(logo, 'top', { rank: 0 });
   }
 };
@@ -181,7 +181,7 @@ const pages: JupyterFrontEndPlugin<void> = {
     app.commands.addCommand(CommandIDs.openTree, {
       label: 'Open Files',
       execute: () => {
-        window.open(`${baseUrl}classic/tree`);
+        window.open(`${baseUrl}retro/tree`);
       }
     });
 
@@ -253,16 +253,16 @@ const sessionDialogs: JupyterFrontEndPlugin<ISessionContextDialogs> = {
 /**
  * The default RetroLab application shell.
  */
-const shell: JupyterFrontEndPlugin<IClassicShell> = {
+const shell: JupyterFrontEndPlugin<IRetroShell> = {
   id: '@retrolab/application-extension:shell',
   activate: (app: JupyterFrontEnd) => {
-    if (!(app.shell instanceof ClassicShell)) {
-      throw new Error(`${shell.id} did not find a ClassicShell instance.`);
+    if (!(app.shell instanceof RetroShell)) {
+      throw new Error(`${shell.id} did not find a RetroShell instance.`);
     }
     return app.shell;
   },
   autoStart: true,
-  provides: IClassicShell
+  provides: IRetroShell
 };
 
 /**
@@ -274,12 +274,12 @@ const spacer: JupyterFrontEndPlugin<void> = {
   activate: (app: JupyterFrontEnd) => {
     const top = new Widget();
     top.id = DOMUtils.createDomID();
-    top.addClass('jp-ClassicSpacer');
+    top.addClass('jp-RetroSpacer');
     app.shell.add(top, 'top', { rank: 10000 });
 
     const menu = new Widget();
     menu.id = DOMUtils.createDomID();
-    menu.addClass('jp-ClassicSpacer');
+    menu.addClass('jp-RetroSpacer');
     app.shell.add(menu, 'menu', { rank: 10000 });
   }
 };
@@ -290,8 +290,8 @@ const spacer: JupyterFrontEndPlugin<void> = {
 const tabTitle: JupyterFrontEndPlugin<void> = {
   id: '@retrolab/application-extension:tab-title',
   autoStart: true,
-  requires: [IClassicShell],
-  activate: (app: JupyterFrontEnd, shell: IClassicShell) => {
+  requires: [IRetroShell],
+  activate: (app: JupyterFrontEnd, shell: IRetroShell) => {
     const setTabTitle = () => {
       const current = shell.currentWidget;
       if (!(current instanceof DocumentWidget)) {
@@ -316,11 +316,11 @@ const tabTitle: JupyterFrontEndPlugin<void> = {
 const title: JupyterFrontEndPlugin<void> = {
   id: '@retrolab/application-extension:title',
   autoStart: true,
-  requires: [IClassicShell],
+  requires: [IRetroShell],
   optional: [IDocumentManager, IRouter],
   activate: (
     app: JupyterFrontEnd,
-    shell: IClassicShell,
+    shell: IRetroShell,
     docManager: IDocumentManager | null,
     router: IRouter | null
   ) => {
@@ -366,7 +366,7 @@ const title: JupyterFrontEndPlugin<void> = {
           return;
         }
         const encoded = encodeURIComponent(result.path);
-        router.navigate(`/classic/${route}/${encoded}`, {
+        router.navigate(`/retro/${route}/${encoded}`, {
           skipRouting: true
         });
       };
@@ -382,14 +382,14 @@ const title: JupyterFrontEndPlugin<void> = {
  */
 const topVisibility: JupyterFrontEndPlugin<void> = {
   id: '@retrolab/application-extension:top',
-  requires: [IClassicShell],
+  requires: [IRetroShell],
   optional: [IMainMenu],
   activate: (
     app: JupyterFrontEnd<JupyterFrontEnd.IShell>,
-    classicShell: IClassicShell,
+    retroShell: IRetroShell,
     menu: IMainMenu | null
   ) => {
-    const top = classicShell.top;
+    const top = retroShell.top;
 
     app.commands.addCommand(CommandIDs.toggleTop, {
       label: 'Show Header',
@@ -405,9 +405,9 @@ const topVisibility: JupyterFrontEndPlugin<void> = {
 
     const onChanged = (): void => {
       if (app.format === 'desktop') {
-        classicShell.expandTop();
+        retroShell.expandTop();
       } else {
-        classicShell.collapseTop();
+        retroShell.collapseTop();
       }
     };
 
@@ -437,25 +437,25 @@ const translator: JupyterFrontEndPlugin<ITranslator> = {
 const zen: JupyterFrontEndPlugin<void> = {
   id: '@retrolab/application-extension:zen',
   autoStart: true,
-  optional: [ICommandPalette, IClassicShell, IMainMenu],
+  optional: [ICommandPalette, IRetroShell, IMainMenu],
   activate: (
     app: JupyterFrontEnd,
     palette: ICommandPalette | null,
-    classicShell: IClassicShell | null,
+    retroShell: IRetroShell | null,
     menu: IMainMenu | null
   ): void => {
     const { commands } = app;
     const elem = document.documentElement;
 
     const toggleOn = () => {
-      classicShell?.collapseTop();
-      classicShell?.menu.setHidden(true);
+      retroShell?.collapseTop();
+      retroShell?.menu.setHidden(true);
       zenModeEnabled = true;
     };
 
     const toggleOff = () => {
-      classicShell?.expandTop();
-      classicShell?.menu.setHidden(false);
+      retroShell?.expandTop();
+      retroShell?.menu.setHidden(false);
       zenModeEnabled = false;
     };
 
