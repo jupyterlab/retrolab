@@ -6,9 +6,9 @@
 [![PyPI](https://img.shields.io/pypi/v/retrolab.svg)](https://pypi.org/project/retrolab)
 [![conda-forge](https://img.shields.io/conda/vn/conda-forge/retrolab.svg)](https://anaconda.org/conda-forge/retrolab)
 
-`RetroLab` (also known as _JupyterLab Retro_, previously called _JupyterLab Classic_) is a [JupyterLab](https://github.com/jupyterlab/jupyterlab) distribution with a _retro_ look and feel.
+`RetroLab` (also known as _JupyterLab Retro_, previously called _JupyterLab Classic_) is an _unofficial_ [JupyterLab](https://github.com/jupyterlab/jupyterlab) distribution with a retro look and feel.
 
-![image](https://user-images.githubusercontent.com/591645/101378325-400fa280-38b3-11eb-81a5-4c7a1aca780e.png)
+![image](https://user-images.githubusercontent.com/591645/118792690-2f1e8080-b898-11eb-98fb-1b8a22b8a07d.png)
 
 ## Install
 
@@ -56,7 +56,7 @@ Should also be available when starting `retrolab`.
 
 ### Open in a new Browser Tab by default
 
-![new-browser-tab](https://user-images.githubusercontent.com/591645/101954309-21374600-3bfc-11eb-80fc-447dce4e6ac6.gif)
+![new-browser-tab](https://user-images.githubusercontent.com/591645/118811914-d9ed6980-b8ad-11eb-8362-f38627199f71.gif)
 
 ### Command Palette 🎨
 
@@ -74,7 +74,7 @@ Support for existing JupyterLab themes!
 
 ### Terminals 🖥️
 
-![terminals](https://user-images.githubusercontent.com/591645/101954217-fc42d300-3bfb-11eb-84c3-fbf84896b829.gif)
+![terminals](https://user-images.githubusercontent.com/591645/118793525-fc28bc80-b898-11eb-9e02-d5a80ad8ddb8.gif)
 
 ### File Editor 🖊️
 
@@ -88,11 +88,11 @@ Support for existing JupyterLab themes!
 
 Install new extensions easily!
 
-![federated-extensions](https://user-images.githubusercontent.com/591645/101954127-dd444100-3bfb-11eb-96be-fee87db5171d.gif)
+![federated-extensions](https://user-images.githubusercontent.com/591645/118813222-38671780-b8af-11eb-835b-f2865bab5c62.gif)
 
 ### Switch between JupyterLab and RetroLab easily ↔️
 
-![jupyterlab-switch](https://user-images.githubusercontent.com/591645/101954746-ec77be80-3bfc-11eb-85ed-7ac0922e365c.gif)
+![jupyterlab-switch](https://user-images.githubusercontent.com/591645/118816963-05bf1e00-b8b3-11eb-92a2-899288471011.gif)
 
 ## Contributing
 
@@ -134,3 +134,4 @@ These projects really expressed the need for a stripped down, minimal version of
 - Zen Mode
 - Repo structure, similar to JupyterLab
 - Reusing as much as possible from upstream JupyterLab
+- Serve as a template and reference implementation for other alternative JupyterLab distributions
