@@ -14,11 +14,7 @@ import { IDocumentManager } from '@jupyterlab/docmanager';
 
 import { NotebookPanel } from '@jupyterlab/notebook';
 
-import {
-  App,
-  RetroShell,
-  IRetroShell
-} from '@retrolab/application';
+import { App, RetroShell, IRetroShell } from '@retrolab/application';
 
 import { Poll } from '@lumino/polling';
 

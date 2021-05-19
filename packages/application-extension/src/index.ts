@@ -25,11 +25,7 @@ import { IMainMenu } from '@jupyterlab/mainmenu';
 
 import { ITranslator, TranslationManager } from '@jupyterlab/translation';
 
-import {
-  App,
-  RetroShell,
-  IRetroShell
-} from '@retrolab/application';
+import { App, RetroShell, IRetroShell } from '@retrolab/application';
 
 import { jupyterIcon } from '@retrolab/ui-components';
 

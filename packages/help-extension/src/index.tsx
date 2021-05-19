@@ -116,8 +116,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
           </>
         );
 
-        const retroNotebookURL =
-          'https://github.com/jtpio/retrolab';
+        const retroNotebookURL = 'https://github.com/jtpio/retrolab';
         const externalLinks = (
           <span>
             <a
