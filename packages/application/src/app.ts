@@ -19,7 +19,7 @@ import { IRetroShell, RetroShell } from './shell';
 /**
  * App is the main application class. It is instantiated once and shared.
  */
-export class App extends JupyterFrontEnd<IRetroShell> {
+export class RetroApp extends JupyterFrontEnd<IRetroShell> {
   /**
    * Construct a new App object.
    *
@@ -184,7 +184,7 @@ namespace Private {
    *
    * @param app The front-end application whose format is set.
    */
-  export function setFormat(app: App): void {
+  export function setFormat(app: RetroApp): void {
     app.format = window.matchMedia(MOBILE_QUERY).matches ? 'mobile' : 'desktop';
   }
 }
