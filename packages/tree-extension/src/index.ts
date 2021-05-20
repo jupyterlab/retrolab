@@ -121,15 +121,12 @@ const browserWidget: JupyterFrontEndPlugin<void> = {
   }
 };
 
-import labplugins from './labplugins';
-
 /**
  * Export the plugins as default.
  */
 const plugins: JupyterFrontEndPlugin<any>[] = [
   newFiles,
   newTerminal,
-  browserWidget,
-  ...labplugins
+  browserWidget
 ];
 export default plugins;

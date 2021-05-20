@@ -134,6 +134,16 @@ async function main() {
   switch (page) {
     case 'tree': {
       mods = mods.concat([
+        require('@jupyterlab/filebrowser-extension').default.filter(({ id }) =>
+          [
+            '@jupyterlab/filebrowser-extension:browser',
+            '@jupyterlab/filebrowser-extension:download',
+            '@jupyterlab/filebrowser-extension:factory',
+            '@jupyterlab/filebrowser-extension:file-upload-status',
+            '@jupyterlab/filebrowser-extension:open-with',
+            '@jupyterlab/filebrowser-extension:share-file'
+          ].includes(id)
+        ),
         require('@retrolab/tree-extension'),
         require('@jupyterlab/running-extension')
       ]);
