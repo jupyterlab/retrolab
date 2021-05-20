@@ -19,7 +19,6 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "style": "style/index.css",
-  "styleModule": "style/index.js",
   "directories": {
     "lib": "lib/"
   },
@@ -39,9 +38,9 @@
     "watch": "tsc -b --watch"
   },
   "dependencies": {
-    "@jupyterlab/application": "^3.0.0",
-    "@jupyterlab/apputils": "^3.0.0",
-    "@jupyterlab/mainmenu": "^3.0.0",
+    "@jupyterlab/application": "^3.0.11",
+    "@jupyterlab/apputils": "^3.0.9",
+    "@jupyterlab/mainmenu": "^3.0.9",
     "@retrolab/ui-components": "^0.2.0"
   },
   "devDependencies": {
@@ -53,5 +52,6 @@
   },
   "jupyterlab": {
     "extension": true
-  }
+  },
+  "styleModule": "style/index.js"
 }
