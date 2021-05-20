@@ -171,8 +171,11 @@ async function main() {
         require('@jupyterlab/fileeditor-extension').default.filter(({ id }) =>
           ['@jupyterlab/fileeditor-extension:plugin'].includes(id)
         ),
-        require('@jupyterlab/fileeditor-extension').default.filter(({ id }) =>
-          ['@jupyterlab/fileeditor-extension:factory'].includes(id)
+        require('@jupyterlab/filebrowser-extension').default.filter(({ id }) =>
+          [
+            '@jupyterlab/filebrowser-extension:browser',
+            '@jupyterlab/filebrowser-extension:factory'
+          ].includes(id)
         )
       ]);
       break;
