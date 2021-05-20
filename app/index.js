@@ -171,8 +171,8 @@ async function main() {
         require('@jupyterlab/fileeditor-extension').default.filter(({ id }) =>
           ['@jupyterlab/fileeditor-extension:plugin'].includes(id)
         ),
-        require('@retrolab/tree-extension').default.filter(({ id }) =>
-          ['@retrolab/tree-extension:factory'].includes(id)
+        require('@jupyterlab/fileeditor-extension').default.filter(({ id }) =>
+          ['@jupyterlab/fileeditor-extension:factory'].includes(id)
         )
       ]);
       break;
