@@ -154,3 +154,8 @@ These projects really expressed the need for a stripped down, minimal version of
 - Repo structure, similar to JupyterLab
 - Reusing as much as possible from upstream JupyterLab
 - Serve as a template and reference implementation for other alternative JupyterLab distributions
+
+## Community Guidelines and Code of Conduct
+
+This repository is a Jupyter project and follows the Jupyter
+[Community Guides and Code of Conduct](https://jupyter.readthedocs.io/en/latest/community/content-community.html).
