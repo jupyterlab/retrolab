@@ -12,7 +12,7 @@
     "url": "https://github.com/jupyterlab/retrolab.git"
   },
   "license": "BSD-3-Clause",
-  "author": "RetroLab Contributors",
+  "author": "Project Jupyter",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {

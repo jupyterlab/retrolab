@@ -9,7 +9,7 @@
     "url": "https://github.com/jupyterlab/retrolab"
   },
   "license": "BSD-3-Clause",
-  "author": "RetroLab Contributors",
+  "author": "Project Jupyter",
   "workspaces": {
     "packages": [
       "app",
