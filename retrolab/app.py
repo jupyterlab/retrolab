@@ -1,6 +1,8 @@
 import os
 from os.path import join as pjoin
 
+from jupyter_core.application import base_aliases
+from jupyter_server.serverapp import flags
 from jupyter_server.base.handlers import JupyterHandler
 from jupyter_server.extension.handler import (
     ExtensionHandlerMixin,
@@ -13,6 +15,7 @@ from jupyterlab_server.config import get_page_config, recursive_update, LabConfi
 from jupyterlab_server.handlers import is_url, _camelCase
 from nbclassic.shim import NBClassicConfigShimMixin
 from tornado import web
+from traitlets import Bool
 
 from ._version import __version__
 
@@ -31,10 +34,11 @@ class RetroHandler(ExtensionHandlerJinjaMixin, ExtensionHandlerMixin, JupyterHan
         page_config = {
             "appVersion": version,
             "baseUrl": self.base_url,
-            "terminalsAvailable": self.settings.get('terminals_available', False),
+            "terminalsAvailable": self.settings.get("terminals_available", False),
             "token": self.settings["token"],
             "fullStaticUrl": ujoin(self.base_url, "static", self.name),
             "frontendUrl": ujoin(self.base_url, "retro/"),
+            "retroLogo": app.retro_logo,
         }
 
         mathjax_config = self.settings.get("mathjax_config", "TeX-AMS_HTML-full,Safe")
@@ -100,6 +104,12 @@ class RetroNotebookHandler(RetroHandler):
         return self.write(tpl)
 
 
+aliases = dict(base_aliases)
+aliases.update({
+   "retro-logo": "RetroApp.retro_logo"
+})
+
+
 class RetroApp(NBClassicConfigShimMixin, LabServerApp):
     name = "retro"
     app_name = "RetroLab"
@@ -116,13 +126,22 @@ class RetroApp(NBClassicConfigShimMixin, LabServerApp):
     user_settings_dir = get_user_settings_dir()
     workspaces_dir = get_workspaces_dir()
     subcommands = {}
+    retro_logo = Bool(
+        False, config=True, help="Whether to use the RetroLab inline logo."
+    )
+
+    flags = flags
+    flags["retro-logo"] = (
+        {"RetroApp": {"retro_logo": True}},
+        "Whether to use the RetroLab inline logo",
+    )
 
     def initialize_handlers(self):
         self.handlers.append(
             (
                 rf"/{self.file_url_prefix}/((?!.*\.ipynb($|\?)).*)",
                 web.RedirectHandler,
-                {"url": "/retro/edit/{0}"}
+                {"url": "/retro/edit/{0}"},
             )
         )
         self.handlers.append(("/retro/tree(.*)", RetroTreeHandler))
