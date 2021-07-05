@@ -15,6 +15,3 @@ factory = "jupyter_packaging.npm_builder"
 [tool.jupyter-packaging.build-args]
 build_cmd = "build:prod"
 npm = ["jlpm"]
-
-[tools.jupyter-releaser.hooks]
-before-bump-version = ["python -m pip install bump2version"]
