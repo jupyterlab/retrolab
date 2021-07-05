@@ -17,4 +17,4 @@ build_cmd = "build:prod"
 npm = ["jlpm"]
 
 [tools.jupyter-releaser.hooks]
-before-prep-git = ["python -m pip install bump2version"]
+before-bump-version = ["python -m pip install bump2version"]
