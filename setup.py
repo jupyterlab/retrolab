@@ -39,7 +39,7 @@ try:
     from jupyter_packaging import wrap_installers, npm_builder, get_data_files
 
     # In develop mode, just run yarn
-    builder = npm_builder(build_cmd='build:prod', npm='jlpm', force=True)
+    builder = npm_builder(build_cmd='build', npm='jlpm', force=True)
     cmdclass = wrap_installers(post_develop=builder, ensured_targets=ensured_targets)
 
     setup_args = dict(
