@@ -5,5 +5,13 @@ build-backend = "setuptools.build_meta"
 [license]
 file="LICENSE"
 
+[tool.jupyter-packaging.options]
+skip-if-exists = ["retrolab/labextension/static/style.js", "retrolab/static/bundle.js"]
+ensured-targets = ["retrolab/labextension/static/style.js", "retrolab/static/bundle.js"]
+
 [tool.jupyter-packaging.builder]
 factory = "jupyter_packaging.npm_builder"
+
+[tool.jupyter-packaging.build-args]
+build_cmd = "build:prod"
+npm = ["jlpm"]
