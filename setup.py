@@ -16,7 +16,7 @@ main_bundle_dest = HERE / NAME / "static"
 
 # Representative files that should exist after a successful build
 ensured_targets = [
-    str(lab_extension_dest / "style.js"),
+    str(lab_extension_dest / "static" / "style.js"),
     str(main_bundle_dest / "bundle.js"),
 ]
 
