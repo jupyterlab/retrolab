@@ -74,6 +74,11 @@
   "jupyter-releaser": {
     "hooks": {
       "before-bump-version": "python -m pip install bump2version"
+    },
+    "options": {
+      "version-cmd": [
+        "jlpm run release:bump --force --skip-commit"
+      ]
     }
   }
 }
