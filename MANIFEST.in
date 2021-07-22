@@ -8,9 +8,9 @@ include package.json
 include install.json
 include ts*.json
 
-graft retrolab/labextension
-graft retrolab/static
-graft retrolab/templates
+include retrolab/labextension/*
+include retrolab/static/*
+include retrolab/templates/*
 
 # Javascript files
 graft src
