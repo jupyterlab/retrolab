@@ -72,7 +72,7 @@ jobs:
           echo "::set-output name=spec::${version_spec}"
 
       - name: Check Release
-        uses: jupyter-server/jupyter_releaser/.github/actions/check-release@v1
+        uses: jupyter-server/jupyter_releaser/.github/actions/check-release@v0.5.2
         env:
           RH_VERSION_SPEC: ${{ steps.version-spec.outputs.spec }}
         with:
