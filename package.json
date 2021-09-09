@@ -72,6 +72,10 @@
   },
   "jupyter-releaser": {
     "hooks": {
+      "before-build-npm": [
+        "jlpm",
+        "jlpm run build:prod"
+      ],
       "before-bump-version": "python -m pip install bump2version"
     },
     "options": {
