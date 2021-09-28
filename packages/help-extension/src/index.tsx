@@ -125,7 +125,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
         );
 
         const retroNotebookURL = 'https://github.com/jupyterlab/retrolab';
-        const linkLabel = trans.__('RETROLAB ON GITHUB');
+        const linkLabel = trans.__('RetroLab on GitHub');
         const externalLinks = (
           <span>
             <a
