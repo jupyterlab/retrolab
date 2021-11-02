@@ -2,18 +2,15 @@
 // Distributed under the terms of the Modified BSD License.
 
 import { JupyterFrontEnd } from '@jupyterlab/application';
-
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 
 import { ArrayExt, find, IIterator, iter } from '@lumino/algorithm';
-
 import { Token } from '@lumino/coreutils';
-
 import { Message, MessageLoop, IMessageHandler } from '@lumino/messaging';
-
+import { Debouncer } from '@lumino/polling';
 import { ISignal, Signal } from '@lumino/signaling';
 
-import { Panel, Widget, BoxLayout } from '@lumino/widgets';
+import { BoxLayout, Panel, StackedPanel, Widget } from '@lumino/widgets';
 
 /**
  * The RetroLab application shell token.
@@ -44,6 +41,9 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
 
     this._topHandler = new Private.PanelHandler();
     this._menuHandler = new Private.PanelHandler();
+    this._leftHandler = new Private.SideBarHandler();
+    this._rightHandler = new Private.SideBarHandler();
+    // TODO Add left and right panels to a layout bookending the main panel
     this._main = new Panel();
 
     this._topHandler.panel.id = 'top-panel';
@@ -59,6 +59,10 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     menuWrapper.id = 'menu-panel-wrapper';
     menuWrapper.addWidget(this._menuHandler.panel);
 
+    // Catch current changed events on the side handlers.
+    this._leftHandler.updated.connect(this._onLayoutModified, this);
+    this._rightHandler.updated.connect(this._onLayoutModified, this);
+
     BoxLayout.setStretch(topWrapper, 0);
     BoxLayout.setStretch(menuWrapper, 0);
     BoxLayout.setStretch(this._main, 1);
@@ -70,6 +74,7 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     rootLayout.addWidget(topWrapper);
     rootLayout.addWidget(menuWrapper);
     rootLayout.addWidget(this._spacer);
+    // TODO: Add a wrapper around left, main, and right instead of just this._main
     rootLayout.addWidget(this._main);
 
     this.layout = rootLayout;
@@ -176,15 +181,32 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
         return iter(this._menuHandler.panel.widgets);
       case 'main':
         return iter(this._main.widgets);
+      case 'left':
+        return iter(this._leftHandler.stackedPanel.widgets);
+      case 'right':
+        return iter(this._rightHandler.stackedPanel.widgets);
       default:
         throw new Error(`Invalid area: ${area}`);
     }
   }
 
+  /**
+   * Handle a change to the layout.
+   */
+  private _onLayoutModified(): void {
+    void this._layoutDebouncer.invoke();
+  }
+
+  private _layoutModified = new Signal<this, void>(this);
+  private _layoutDebouncer = new Debouncer(() => {
+    this._layoutModified.emit(undefined);
+  }, 0);
   private _topWrapper: Panel;
   private _topHandler: Private.PanelHandler;
   private _menuWrapper: Panel;
   private _menuHandler: Private.PanelHandler;
+  private _leftHandler: Private.SideBarHandler;
+  private _rightHandler: Private.SideBarHandler;
   private _spacer: Widget;
   private _main: Panel;
   private _currentChanged = new Signal<this, void>(this);
@@ -197,7 +219,7 @@ export namespace Shell {
   /**
    * The areas of the application shell where widgets can reside.
    */
-  export type Area = 'main' | 'top' | 'menu';
+  export type Area = 'main' | 'top' | 'left' | 'right' | 'menu';
 }
 
 /**
@@ -288,5 +310,175 @@ namespace Private {
 
     private _items = new Array<Private.IRankItem>();
     private _panel = new Panel();
+  }
+
+  /**
+   * A class which manages a side bar that can show at most one widget at a time.
+   */
+  export class SideBarHandler {
+    /**
+     * Construct a new side bar handler.
+     */
+    constructor() {
+      this._stackedPanel = new StackedPanel();
+      this._stackedPanel.hide();
+      this._current = null;
+      this._lastCurrent = null;
+      this._stackedPanel.widgetRemoved.connect(this._onWidgetRemoved, this);
+    }
+
+    get current(): Widget | null {
+      return (
+        this._current ||
+        this._lastCurrent ||
+        (this._items.length > 0 ? this._items[0].widget : null)
+      );
+    }
+
+    /**
+     * Whether the panel is visible
+     */
+    get isVisible(): boolean {
+      return this._stackedPanel.isVisible;
+    }
+
+    /**
+     * Get the stacked panel managed by the handler
+     */
+    get stackedPanel(): StackedPanel {
+      return this._stackedPanel;
+    }
+
+    /**
+     * Signal fires when the stacked panel changes
+     */
+    get updated(): ISignal<SideBarHandler, void> {
+      return this._updated;
+    }
+
+    /**
+     * Expand the sidebar.
+     *
+     * #### Notes
+     * This will open the most recently used widget, or the first widget
+     * if there is no most recently used.
+     */
+    expand(): void {
+      const visibleWidget = this.current;
+      if (visibleWidget) {
+        this._current = visibleWidget;
+        this.activate(visibleWidget.id);
+      }
+    }
+
+    /**
+     * Activate a widget residing in the stacked panel by ID.
+     *
+     * @param id - The widget's unique ID.
+     */
+    activate(id: string): void {
+      const widget = this._findWidgetByID(id);
+      if (widget) {
+        this._current = widget;
+        widget.activate();
+      }
+    }
+
+    /**
+     * Test whether the sidebar has the given widget by id.
+     */
+    has(id: string): boolean {
+      return this._findWidgetByID(id) !== null;
+    }
+
+    /**
+     * Collapse the sidebar so no items are expanded.
+     */
+    collapse(): void {
+      this._current = null;
+    }
+
+    /**
+     * Add a widget and its title to the stacked panel.
+     *
+     * If the widget is already added, it will be moved.
+     */
+    addWidget(widget: Widget, rank: number): void {
+      widget.parent = null;
+      widget.hide();
+      const item = { widget, rank };
+      const index = this._findInsertIndex(item);
+      ArrayExt.insert(this._items, index, item);
+      this._stackedPanel.insertWidget(index, widget);
+
+      // TODO: Update menu to include widget in appropriate position
+
+      this._refreshVisibility();
+    }
+
+    /**
+     * Hide the side panel
+     */
+    hide(): void {
+      this._isHiddenByUser = true;
+      this._refreshVisibility();
+    }
+
+    /**
+     * Show the side panel
+     */
+    show(): void {
+      this._isHiddenByUser = false;
+      this._refreshVisibility();
+    }
+
+    /**
+     * Find the insertion index for a rank item.
+     */
+    private _findInsertIndex(item: Private.IRankItem): number {
+      return ArrayExt.upperBound(this._items, item, Private.itemCmp);
+    }
+
+    /**
+     * Find the index of the item with the given widget, or `-1`.
+     */
+    private _findWidgetIndex(widget: Widget): number {
+      return ArrayExt.findFirstIndex(this._items, i => i.widget === widget);
+    }
+
+    /**
+     * Find the widget with the given id, or `null`.
+     */
+    private _findWidgetByID(id: string): Widget | null {
+      const item = find(this._items, value => value.widget.id === id);
+      return item ? item.widget : null;
+    }
+
+    /**
+     * Refresh the visibility of the stacked panel.
+     */
+    private _refreshVisibility(): void {
+      this._stackedPanel.setHidden(this._isHiddenByUser);
+      this._updated.emit();
+    }
+
+    /*
+     * Handle the `widgetRemoved` signal from the panel.
+     */
+    private _onWidgetRemoved(sender: StackedPanel, widget: Widget): void {
+      if (widget === this._lastCurrent) {
+        this._lastCurrent = null;
+      }
+      ArrayExt.removeAt(this._items, this._findWidgetIndex(widget));
+      // TODO: Remove the widget from the menu
+      this._refreshVisibility();
+    }
+
+    private _isHiddenByUser = false;
+    private _items = new Array<Private.IRankItem>();
+    private _stackedPanel: StackedPanel;
+    private _current: Widget | null;
+    private _lastCurrent: Widget | null;
+    private _updated: Signal<SideBarHandler, void> = new Signal(this);
   }
 }
