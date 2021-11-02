@@ -135,20 +135,27 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     options?: DocumentRegistry.IOpenOptions
   ): void {
     const rank = options?.rank ?? DEFAULT_RANK;
-    if (area === 'top') {
-      return this._topHandler.addWidget(widget, rank);
-    }
-    if (area === 'menu') {
-      return this._menuHandler.addWidget(widget, rank);
-    }
-    if (area === 'main' || area === undefined) {
-      if (this._main.widgets.length > 0) {
-        // do not add the widget if there is already one
-        return;
-      }
-      this._main.addWidget(widget);
-      this._main.update();
-      this._currentChanged.emit(void 0);
+    switch (area) {
+      case 'top':
+        return this._topHandler.addWidget(widget, rank);
+      case 'menu':
+        return this._menuHandler.addWidget(widget, rank);
+      case 'main':
+      case undefined:
+        if (this._main.widgets.length > 0) {
+          // do not add the widget if there is already one
+          return;
+        }
+        this._main.addWidget(widget);
+        this._main.update();
+        this._currentChanged.emit(void 0);
+        break;
+      case 'left':
+        return this._leftHandler.addWidget(widget, rank);
+      case 'right':
+        return this._rightHandler.addWidget(widget, rank);
+      default:
+        throw new Error(`Cannot add widget to area: ${area}`);
     }
   }
 

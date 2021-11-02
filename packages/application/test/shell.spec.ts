@@ -38,8 +38,8 @@ describe('Shell', () => {
     it('should throw an exception if the area does not exist', () => {
       const jupyterFrontEndShell = shell as JupyterFrontEnd.IShell;
       expect(() => {
-        jupyterFrontEndShell.widgets('left');
-      }).toThrow('Invalid area: left');
+        jupyterFrontEndShell.widgets('fake');
+      }).toThrow('Invalid area: fake');
     });
   });
 
@@ -81,6 +81,26 @@ describe('Shell', () => {
       widget.id = 'foo';
       shell.add(widget, 'main');
       const widgets = toArray(shell.widgets('main'));
+      expect(widgets.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('#add(widget, "left")', () => {
+    it('should add a widget to the left area', () => {
+      const widget = new Widget();
+      widget.id = 'foo';
+      shell.add(widget, 'left');
+      const widgets = toArray(shell.widgets('left'));
+      expect(widgets.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('#add(widget, "right")', () => {
+    it('should add a widget to the right area', () => {
+      const widget = new Widget();
+      widget.id = 'foo';
+      shell.add(widget, 'right');
+      const widgets = toArray(shell.widgets('right'));
       expect(widgets.length).toBeGreaterThan(0);
     });
   });
