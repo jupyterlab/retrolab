@@ -47,8 +47,10 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
 
     this._topHandler = new Private.PanelHandler();
     this._menuHandler = new Private.PanelHandler();
-    const leftHandler = (this._leftHandler = new Private.SideBarHandler());
-    const rightHandler = (this._rightHandler = new Private.SideBarHandler());
+    // const leftHandler = (this._leftHandler = new Private.SideBarHandler());
+    // const rightHandler = (this._rightHandler = new Private.SideBarHandler());
+    this._leftHandler = new Private.SideBarHandler();
+    this._rightHandler = new Private.SideBarHandler();
     const mainPanel = (this._main = new Panel());
 
     this._topHandler.panel.id = 'top-panel';
@@ -65,7 +67,7 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     menuWrapper.addWidget(this._menuHandler.panel);
 
     // TODO: Consider storing this as an attribute this._hsplitPanel if saving/restoring layout needed
-    const hsplitPanel = new Private.RestorableSplitPanel();
+    // const hsplitPanel = new Private.RestorableSplitPanel();
 
     // Catch current changed events on the side handlers.
     this._leftHandler.updated.connect(this._onLayoutModified, this);
@@ -73,14 +75,15 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
 
     BoxLayout.setStretch(topWrapper, 0);
     BoxLayout.setStretch(menuWrapper, 0);
+    BoxLayout.setStretch(mainPanel, 1);
 
-    SplitPanel.setStretch(leftHandler.stackedPanel, 0);
-    SplitPanel.setStretch(rightHandler.stackedPanel, 0);
-    SplitPanel.setStretch(mainPanel, 1);
+    // SplitPanel.setStretch(leftHandler.stackedPanel, 0);
+    // SplitPanel.setStretch(rightHandler.stackedPanel, 0);
+    // SplitPanel.setStretch(mainPanel, 1);
 
-    hsplitPanel.addWidget(leftHandler.stackedPanel);
-    hsplitPanel.addWidget(mainPanel);
-    hsplitPanel.addWidget(rightHandler.stackedPanel);
+    // hsplitPanel.addWidget(leftHandler.stackedPanel);
+    // hsplitPanel.addWidget(mainPanel);
+    // hsplitPanel.addWidget(rightHandler.stackedPanel);
 
     this._spacer = new Widget();
     this._spacer.id = 'spacer-widget';
@@ -89,7 +92,8 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     rootLayout.addWidget(topWrapper);
     rootLayout.addWidget(menuWrapper);
     rootLayout.addWidget(this._spacer);
-    rootLayout.addWidget(hsplitPanel);
+    rootLayout.addWidget(mainPanel);
+    // hsplitPanel.addWidget(mainPanel);
 
     this.layout = rootLayout;
   }
