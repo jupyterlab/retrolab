@@ -5,6 +5,8 @@ node_modules/
 .ipynb_checkpoints
 *.tsbuildinfo
 
+*/yarn-error.log
+
 # Created by https://www.gitignore.io/api/python
 # Edit at https://www.gitignore.io/?templates=python
 

@@ -10,7 +10,13 @@ import { Message, MessageLoop, IMessageHandler } from '@lumino/messaging';
 import { Debouncer } from '@lumino/polling';
 import { ISignal, Signal } from '@lumino/signaling';
 
-import { BoxLayout, Panel, StackedPanel, Widget } from '@lumino/widgets';
+import {
+  BoxLayout,
+  Panel,
+  SplitPanel,
+  StackedPanel,
+  Widget
+} from '@lumino/widgets';
 
 /**
  * The RetroLab application shell token.
@@ -41,10 +47,9 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
 
     this._topHandler = new Private.PanelHandler();
     this._menuHandler = new Private.PanelHandler();
-    this._leftHandler = new Private.SideBarHandler();
-    this._rightHandler = new Private.SideBarHandler();
-    // TODO Add left and right panels to a layout bookending the main panel
-    this._main = new Panel();
+    const leftHandler = (this._leftHandler = new Private.SideBarHandler());
+    const rightHandler = (this._rightHandler = new Private.SideBarHandler());
+    const mainPanel = (this._main = new Panel());
 
     this._topHandler.panel.id = 'top-panel';
     this._menuHandler.panel.id = 'menu-panel';
@@ -59,13 +64,23 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     menuWrapper.id = 'menu-panel-wrapper';
     menuWrapper.addWidget(this._menuHandler.panel);
 
+    // TODO: Consider storing this as an attribute this._hsplitPanel if saving/restoring layout needed
+    const hsplitPanel = new Private.RestorableSplitPanel();
+
     // Catch current changed events on the side handlers.
     this._leftHandler.updated.connect(this._onLayoutModified, this);
     this._rightHandler.updated.connect(this._onLayoutModified, this);
 
     BoxLayout.setStretch(topWrapper, 0);
     BoxLayout.setStretch(menuWrapper, 0);
-    BoxLayout.setStretch(this._main, 1);
+
+    SplitPanel.setStretch(leftHandler.stackedPanel, 0);
+    SplitPanel.setStretch(rightHandler.stackedPanel, 0);
+    SplitPanel.setStretch(mainPanel, 1);
+
+    hsplitPanel.addWidget(leftHandler.stackedPanel);
+    hsplitPanel.addWidget(mainPanel);
+    hsplitPanel.addWidget(rightHandler.stackedPanel);
 
     this._spacer = new Widget();
     this._spacer.id = 'spacer-widget';
@@ -74,8 +89,7 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     rootLayout.addWidget(topWrapper);
     rootLayout.addWidget(menuWrapper);
     rootLayout.addWidget(this._spacer);
-    // TODO: Add a wrapper around left, main, and right instead of just this._main
-    rootLayout.addWidget(this._main);
+    rootLayout.addWidget(hsplitPanel);
 
     this.layout = rootLayout;
   }
@@ -487,5 +501,22 @@ namespace Private {
     private _current: Widget | null;
     private _lastCurrent: Widget | null;
     private _updated: Signal<SideBarHandler, void> = new Signal(this);
+  }
+
+  export class RestorableSplitPanel extends SplitPanel {
+    updated: Signal<RestorableSplitPanel, void>;
+
+    constructor(options: SplitPanel.IOptions = {}) {
+      super(options);
+      this.updated = new Signal(this);
+    }
+
+    /**
+     * Emit 'updated' signal on 'update' requests.
+     */
+    protected onUpdateRequest(msg: Message): void {
+      super.onUpdateRequest(msg);
+      this.updated.emit();
+    }
   }
 }
