@@ -78,13 +78,13 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     BoxLayout.setStretch(hsplitPanel, 1);
     BoxLayout.setStretch(mainPanel, 1);
 
-    // SplitPanel.setStretch(leftHandler.stackedPanel, 0);
-    // SplitPanel.setStretch(rightHandler.stackedPanel, 0);
+    SplitPanel.setStretch(leftHandler.stackedPanel, 0);
+    SplitPanel.setStretch(rightHandler.stackedPanel, 0);
     SplitPanel.setStretch(mainPanel, 1);
 
-    // hsplitPanel.addWidget(leftHandler.stackedPanel);
+    hsplitPanel.addWidget(leftHandler.stackedPanel);
     hsplitPanel.addWidget(mainPanel);
-    // hsplitPanel.addWidget(rightHandler.stackedPanel);
+    hsplitPanel.addWidget(rightHandler.stackedPanel);
 
     this._spacer = new Widget();
     this._spacer.id = 'spacer-widget';
