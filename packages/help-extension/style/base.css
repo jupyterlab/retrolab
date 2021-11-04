@@ -35,6 +35,7 @@
   align-items: flex-start;
   padding-top: 12px;
   color: var(--jp-warn-color0);
+  text-transform: uppercase;
 }
 
 .jp-AboutRetro-shortcuts {
