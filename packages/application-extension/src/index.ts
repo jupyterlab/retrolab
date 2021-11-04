@@ -65,6 +65,16 @@ namespace CommandIDs {
   export const toggleTop = 'application:toggle-top';
 
   /**
+   * Toggle left sidebar visibility
+   */
+  export const toggleLeft = 'application:toggle-left';
+
+  /**
+   * Toggle right sidebar visibility
+   */
+  export const toggleRight = 'application:toggle-right';
+
+  /**
    * Toggle the Zen mode
    */
   export const toggleZen = 'application:toggle-zen';
@@ -514,6 +524,45 @@ const topVisibility: JupyterFrontEndPlugin<void> = {
 };
 
 /**
+ * Plugin to toggle the left or right sidebar's visibility.
+ */
+const sidebarVisibility: JupyterFrontEndPlugin<void> = {
+  id: '@retrolab/application-extension:sidebar',
+  requires: [IRetroShell, ITranslator],
+  optional: [IMainMenu, ISettingRegistry],
+  activate: (
+    app: JupyterFrontEnd<JupyterFrontEnd.IShell>,
+    retroShell: IRetroShell,
+    translator: ITranslator,
+    menu: IMainMenu | null,
+    settingRegistry: ISettingRegistry | null
+  ) => {
+    const trans = translator.load('retrolab');
+
+    app.commands.addCommand(CommandIDs.toggleLeft, {
+      label: trans.__('Show Left Sidebar'),
+      execute: () => {
+        if (retroShell.leftCollapsed) {
+          retroShell.expandLeft();
+        } else {
+          retroShell.collapseLeft();
+          if (retroShell.currentWidget) {
+            retroShell.activateById(retroShell.currentWidget.id);
+          }
+        }
+      },
+      isToggled: () => !retroShell.leftCollapsed
+      // isEnabled: () => !retroShell.isEmpty('left')
+    });
+
+    if (menu) {
+      menu.viewMenu.addGroup([{ command: CommandIDs.toggleLeft }], 2);
+    }
+  },
+  autoStart: true
+};
+
+/**
  * The default tree route resolver plugin.
  */
 const tree: JupyterFrontEndPlugin<JupyterFrontEnd.ITreeResolver> = {
@@ -672,6 +721,7 @@ const plugins: JupyterFrontEndPlugin<any>[] = [
   router,
   sessionDialogs,
   shell,
+  sidebarVisibility,
   spacer,
   status,
   tabTitle,

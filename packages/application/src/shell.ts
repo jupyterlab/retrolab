@@ -64,6 +64,16 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     menuWrapper.id = 'menu-panel-wrapper';
     menuWrapper.addWidget(this._menuHandler.panel);
 
+    // Add a dummy widget to the left panel.
+    // TODO: Add the extension manager widget instead.
+    const dummyWidget = new Widget();
+    dummyWidget.id = 'foo';
+    this.add(dummyWidget, 'left');
+
+    // Hide the side panels by default.
+    leftHandler.hide();
+    rightHandler.hide();
+
     // TODO: Consider storing this as an attribute this._hsplitPanel if saving/restoring layout needed
     const hsplitPanel = new SplitPanel();
     hsplitPanel.id = 'main-split-panel';
@@ -124,6 +134,34 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
    */
   get menu(): Widget {
     return this._menuWrapper;
+  }
+
+  /**
+   * Shortcut to get the left area handler's stacked panel
+   */
+  get leftPanel(): StackedPanel {
+    return this._leftHandler.stackedPanel;
+  }
+
+  /**
+   * Shortcut to get the right area handler's stacked panel
+   */
+  get rightPanel(): StackedPanel {
+    return this._rightHandler.stackedPanel;
+  }
+
+  /**
+   * Is the left sidebar visible?
+   */
+  get leftCollapsed(): boolean {
+    return !(this._leftHandler.isVisible && this.leftPanel.isVisible);
+  }
+
+  /**
+   * Is the right sidebar visible?
+   */
+  get rightCollapsed(): boolean {
+    return !(this._rightHandler.isVisible && this.rightPanel.isVisible);
   }
 
   /**
@@ -191,6 +229,22 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
   expandTop(): void {
     this._topWrapper.setHidden(false);
     this._spacer.setHidden(false);
+  }
+
+  /**
+   * Expand the left panel to show the sidebar with its widget.
+   */
+  expandLeft(): void {
+    this.leftPanel.show();
+    this._leftHandler.expand(); // Show the current widget, if any
+  }
+
+  /**
+   * Collapse the left panel
+   */
+  collapseLeft(): void {
+    this._leftHandler.collapse();
+    this.leftPanel.hide();
   }
 
   /**
@@ -405,6 +459,7 @@ namespace Private {
       const widget = this._findWidgetByID(id);
       if (widget) {
         this._current = widget;
+        widget.show();
         widget.activate();
       }
     }
