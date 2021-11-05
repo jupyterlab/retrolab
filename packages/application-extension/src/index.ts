@@ -551,8 +551,8 @@ const sidebarVisibility: JupyterFrontEndPlugin<void> = {
           }
         }
       },
-      isToggled: () => !retroShell.leftCollapsed
-      // isEnabled: () => !retroShell.isEmpty('left')
+      isToggled: () => !retroShell.leftCollapsed,
+      isEnabled: () => !retroShell.isEmpty('left')
     });
 
     app.commands.addCommand(CommandIDs.toggleRight, {
@@ -567,8 +567,8 @@ const sidebarVisibility: JupyterFrontEndPlugin<void> = {
           }
         }
       },
-      isToggled: () => !retroShell.rightCollapsed
-      // isEnabled: () => !retroShell.isEmpty('right')
+      isToggled: () => !retroShell.rightCollapsed,
+      isEnabled: () => !retroShell.isEmpty('right')
     });
 
     if (menu) {

@@ -275,30 +275,41 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     this._onLayoutModified();
   }
 
+  widgetsList(area: Shell.Area): readonly Widget[] {
+    switch (area ?? 'main') {
+      case 'top':
+        return this._topHandler.panel.widgets;
+      case 'menu':
+        return this._menuHandler.panel.widgets;
+      case 'main':
+        return this._main.widgets;
+      case 'left':
+        return this._leftHandler.stackedPanel.widgets;
+      case 'right':
+        return this._rightHandler.stackedPanel.widgets;
+      default:
+        throw new Error(`Invalid area: ${area}`);
+    }
+  }
+
   /**
    * Return the list of widgets for the given area.
    *
    * @param area The area
    */
   widgets(area: Shell.Area): IIterator<Widget> {
-    switch (area ?? 'main') {
-      case 'top':
-        return iter(this._topHandler.panel.widgets);
-      case 'menu':
-        return iter(this._menuHandler.panel.widgets);
-      case 'main':
-        return iter(this._main.widgets);
-      case 'left':
-        return iter(this._leftHandler.stackedPanel.widgets);
-      case 'right':
-        return iter(this._rightHandler.stackedPanel.widgets);
-      default:
-        throw new Error(`Invalid area: ${area}`);
-    }
+    return iter(this.widgetsList(area));
   }
 
-  // TODO: add isEmpty(area) to determine whether a panel is empty.
-  // for example, this.leftPanel.widgets.length === 0
+  /**
+   * Is a particular area empty (no widgets)?
+   *
+   * @param area Named area in the application
+   * @returns true if area has no widgets, false if at least one widget is present
+   */
+  isEmpty(area: Shell.Area): boolean {
+    return this.widgetsList(area).length === 0;
+  }
 
   /**
    * Handle a change to the layout.
