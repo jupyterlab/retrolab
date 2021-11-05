@@ -1,7 +1,7 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-import { RetroShell, IRetroShell } from '@retrolab/application';
+import { IRetroShell, RetroShell, Shell } from '@retrolab/application';
 
 import { JupyterFrontEnd } from '@jupyterlab/application';
 
@@ -24,6 +24,12 @@ describe('Shell', () => {
   describe('#constructor()', () => {
     it('should create a LabShell instance', () => {
       expect(shell).toBeInstanceOf(RetroShell);
+    });
+
+    it('should make all areas empty initially', () => {
+      ['main', 'top', 'left', 'right', 'menu'].forEach(area =>
+        expect(shell.isEmpty(area as Shell.Area)).toBe(true)
+      );
     });
   });
 
@@ -62,16 +68,14 @@ describe('Shell', () => {
       const widget = new Widget();
       widget.id = 'foo';
       shell.add(widget, 'top');
-      const widgets = toArray(shell.widgets('top'));
-      expect(widgets.length).toBeGreaterThan(0);
+      expect(shell.isEmpty('top')).toBe(false);
     });
 
     it('should accept options', () => {
       const widget = new Widget();
       widget.id = 'foo';
       shell.add(widget, 'top', { rank: 10 });
-      const widgets = toArray(shell.widgets('top'));
-      expect(widgets.length).toBeGreaterThan(0);
+      expect(shell.isEmpty('top')).toBe(false);
     });
   });
 
@@ -80,8 +84,7 @@ describe('Shell', () => {
       const widget = new Widget();
       widget.id = 'foo';
       shell.add(widget, 'main');
-      const widgets = toArray(shell.widgets('main'));
-      expect(widgets.length).toBeGreaterThan(0);
+      expect(shell.isEmpty('main')).toBe(false);
     });
   });
 
@@ -90,8 +93,7 @@ describe('Shell', () => {
       const widget = new Widget();
       widget.id = 'foo';
       shell.add(widget, 'left');
-      const widgets = toArray(shell.widgets('left'));
-      expect(widgets.length).toBeGreaterThan(0);
+      expect(shell.isEmpty('left')).toBe(false);
     });
   });
 
@@ -100,8 +102,7 @@ describe('Shell', () => {
       const widget = new Widget();
       widget.id = 'foo';
       shell.add(widget, 'right');
-      const widgets = toArray(shell.widgets('right'));
-      expect(widgets.length).toBeGreaterThan(0);
+      expect(shell.isEmpty('right')).toBe(false);
     });
   });
 });

@@ -67,12 +67,6 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     this.leftPanel.id = 'jp-left-stack';
     this.rightPanel.id = 'jp-right-stack';
 
-    // Add a dummy widget to the left panel.
-    // TODO: Add the extension manager widget instead.
-    const dummyWidget = new Widget();
-    dummyWidget.id = 'foo';
-    this.add(dummyWidget, 'left');
-
     // Hide the side panels by default.
     leftHandler.hide();
     rightHandler.hide();
