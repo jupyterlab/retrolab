@@ -258,6 +258,24 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
   }
 
   /**
+   * Expand the right panel to show the sidebar with its widget.
+   */
+  expandRight(): void {
+    this.rightPanel.show();
+    this._rightHandler.expand(); // Show the current widget, if any
+    this._onLayoutModified();
+  }
+
+  /**
+   * Collapse the right panel
+   */
+  collapseRight(): void {
+    this._rightHandler.collapse();
+    this.rightPanel.hide();
+    this._onLayoutModified();
+  }
+
+  /**
    * Return the list of widgets for the given area.
    *
    * @param area The area

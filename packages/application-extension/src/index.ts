@@ -555,8 +555,30 @@ const sidebarVisibility: JupyterFrontEndPlugin<void> = {
       // isEnabled: () => !retroShell.isEmpty('left')
     });
 
+    app.commands.addCommand(CommandIDs.toggleRight, {
+      label: trans.__('Show Right Sidebar'),
+      execute: () => {
+        if (retroShell.rightCollapsed) {
+          retroShell.expandRight();
+        } else {
+          retroShell.collapseRight();
+          if (retroShell.currentWidget) {
+            retroShell.activateById(retroShell.currentWidget.id);
+          }
+        }
+      },
+      isToggled: () => !retroShell.rightCollapsed
+      // isEnabled: () => !retroShell.isEmpty('right')
+    });
+
     if (menu) {
-      menu.viewMenu.addGroup([{ command: CommandIDs.toggleLeft }], 2);
+      menu.viewMenu.addGroup(
+        [
+          { command: CommandIDs.toggleLeft },
+          { command: CommandIDs.toggleRight }
+        ],
+        2
+      );
     }
   },
   autoStart: true
