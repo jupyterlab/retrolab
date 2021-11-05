@@ -80,3 +80,6 @@ body[data-retro='notebooks'] #main-panel {
 body[data-retro='notebooks'] #spacer-widget {
   min-height: unset;
 }
+
+/* Sibling imports */
+@import './sidepanel.css';

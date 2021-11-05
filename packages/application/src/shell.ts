@@ -64,6 +64,9 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     menuWrapper.id = 'menu-panel-wrapper';
     menuWrapper.addWidget(this._menuHandler.panel);
 
+    this.leftPanel.id = 'jp-left-stack';
+    this.rightPanel.id = 'jp-right-stack';
+
     // Add a dummy widget to the left panel.
     // TODO: Add the extension manager widget instead.
     const dummyWidget = new Widget();
@@ -95,6 +98,11 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     hsplitPanel.addWidget(leftHandler.stackedPanel);
     hsplitPanel.addWidget(mainPanel);
     hsplitPanel.addWidget(rightHandler.stackedPanel);
+
+    // Use relative sizing to set the width of the side panels.
+    // This will still respect the min-size of children widget in the stacked
+    // panel.
+    hsplitPanel.setRelativeSizes([1, 2.5, 1]);
 
     this._spacer = new Widget();
     this._spacer.id = 'spacer-widget';
@@ -237,6 +245,7 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
   expandLeft(): void {
     this.leftPanel.show();
     this._leftHandler.expand(); // Show the current widget, if any
+    this._onLayoutModified();
   }
 
   /**
@@ -245,6 +254,7 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
   collapseLeft(): void {
     this._leftHandler.collapse();
     this.leftPanel.hide();
+    this._onLayoutModified();
   }
 
   /**
@@ -268,6 +278,9 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
         throw new Error(`Invalid area: ${area}`);
     }
   }
+
+  // TODO: add isEmpty(area) to determine whether a panel is empty.
+  // for example, this.leftPanel.widgets.length === 0
 
   /**
    * Handle a change to the layout.
