@@ -180,7 +180,8 @@ async function main() {
             '@jupyterlab/tooltip-extension:manager',
             '@jupyterlab/tooltip-extension:notebooks'
           ].includes(id)
-        )
+        ),
+        require('@jupyterlab/toc-extension')
       ]);
       break;
     }

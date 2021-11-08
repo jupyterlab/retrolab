@@ -64,6 +64,8 @@
     "@jupyterlab/tooltip-extension": "~3.2.0",
     "@jupyterlab/translation": "~3.2.0",
     "@jupyterlab/translation-extension": "~3.2.0",
+    "@jupyterlab/toc": "~5.2.0",
+    "@jupyterlab/toc-extension": "~5.2.0",
     "@jupyterlab/ui-components": "~3.2.0",
     "@jupyterlab/vega5-extension": "~3.2.0",
     "@lumino/algorithm": "~1.6.0",
@@ -181,6 +183,7 @@
       "@jupyterlab/terminal-extension",
       "@jupyterlab/theme-dark-extension",
       "@jupyterlab/theme-light-extension",
+      "@jupyterlab/toc-extension",
       "@jupyterlab/tooltip-extension",
       "@jupyterlab/translation-extension"
     ],
