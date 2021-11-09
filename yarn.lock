@@ -2686,7 +2686,7 @@
     "@jupyterlab/apputils" "^3.2.0"
     "@jupyterlab/translation" "^3.2.0"
 
-"@jupyterlab/toc-extension@~5.2.0":
+"@jupyterlab/toc-extension@^5.2.0":
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/@jupyterlab/toc-extension/-/toc-extension-5.2.2.tgz#06b39875462f37dd525d2ba56fd0251eca96e985"
   integrity sha512-GTfsTXhnOXm1qNGycY1IaCOtzQMPZY9TbY4k8BPWXJr0JJsd+sOR1mqONnnc5jD1z4TK5JCdXCppZi1nuadbzg==
@@ -2703,7 +2703,7 @@
     "@jupyterlab/translation" "^3.2.2"
     "@jupyterlab/ui-components" "^3.2.2"
 
-"@jupyterlab/toc@^5.2.2", "@jupyterlab/toc@~5.2.0":
+"@jupyterlab/toc@^5.2.2":
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/@jupyterlab/toc/-/toc-5.2.2.tgz#60d31ae1afa1d152f46dd5ff9075c17d3827001c"
   integrity sha512-NZEwN/9FFS/0IogYknqX6/1zTz/JgB6ymS8uHzRjL+wTMmvv+WHxnDG5aJ8FvM1OVmdrwPeptfWemApSWQz/8Q==
