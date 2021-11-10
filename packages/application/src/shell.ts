@@ -189,7 +189,7 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
    */
   add(
     widget: Widget,
-    area?: Shell.Area,
+    area?: string,
     options?: DocumentRegistry.IOpenOptions
   ): void {
     const rank = options?.rank ?? DEFAULT_RANK;

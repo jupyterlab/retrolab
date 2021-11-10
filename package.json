@@ -86,5 +86,8 @@
     "skip": [
       "check-links"
     ]
+  },
+  "dependencies": {
+    "util": "^0.12.4"
   }
 }
