@@ -132,7 +132,7 @@ body[data-retro='notebooks'] .jp-Notebook.jp-mod-scrollPastEnd::after {
   color: var(--jp-ui-font-color1);
   margin-top: 4px;
   margin-bottom: 4px;
-  border: solid grey 1px;
+  border: solid 1px var(--jp-border-color2);
   cursor: help;
 }
 
