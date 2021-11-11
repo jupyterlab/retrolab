@@ -69,6 +69,9 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     menuWrapper.id = 'menu-panel-wrapper';
     menuWrapper.addWidget(this._menuHandler.panel);
 
+    BoxLayout.setStretch(this._topWrapper, 0);
+    BoxLayout.setStretch(this._menuWrapper, 0);
+
     if (sidePanelsVisible) {
       this.layout = this.initLayoutWithSidePanels();
     } else {
@@ -76,12 +79,9 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     }
   }
 
-  // TODO: refactor
   initLayoutWithoutSidePanels(): Layout {
     const rootLayout = new BoxLayout();
 
-    BoxLayout.setStretch(this._topWrapper, 0);
-    BoxLayout.setStretch(this._menuWrapper, 0);
     BoxLayout.setStretch(this._main, 1);
 
     this._spacer = new Widget();
@@ -118,9 +118,6 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     leftHandler.updated.connect(this._onLayoutModified, this);
     rightHandler.updated.connect(this._onLayoutModified, this);
 
-    BoxLayout.setStretch(this._topWrapper, 0);
-    BoxLayout.setStretch(this._menuWrapper, 0);
-
     BoxLayout.setStretch(hsplitPanel, 1);
 
     SplitPanel.setStretch(leftHandler.stackedPanel, 0);
@@ -140,7 +137,6 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     rootLayout.addWidget(this._topWrapper);
     rootLayout.addWidget(this._menuWrapper);
     rootLayout.addWidget(this._spacer);
-
     rootLayout.addWidget(hsplitPanel);
 
     return rootLayout;
