@@ -21,6 +21,7 @@ import { IRetroShell } from '@retrolab/application';
 import { Poll } from '@lumino/polling';
 
 import { Widget } from '@lumino/widgets';
+
 import { TrustedComponent } from './trusted';
 
 /**
