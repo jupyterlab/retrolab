@@ -96,6 +96,13 @@ namespace CommandIDs {
 }
 
 /**
+ * Are the left and right panels available on the current page?
+ */
+const sidePanelsEnabled: () => boolean = () => {
+  return PageConfig.getOption('retroPage') === 'notebooks';
+};
+
+/**
  * Check if the application is dirty before closing the browser tab.
  */
 const dirty: JupyterFrontEndPlugin<void> = {
@@ -537,6 +544,10 @@ const sidebarVisibility: JupyterFrontEndPlugin<void> = {
     menu: IMainMenu | null,
     settingRegistry: ISettingRegistry | null
   ) => {
+    if (!sidePanelsEnabled()) {
+      return;
+    }
+
     const trans = translator.load('retrolab');
 
     app.commands.addCommand(CommandIDs.toggleLeft, {
