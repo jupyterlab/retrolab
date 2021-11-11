@@ -44,9 +44,6 @@
       "pre-commit": "lint-staged"
     }
   },
-  "dependencies": {
-    "util": "^0.12.4"
-  },
   "devDependencies": {
     "@jupyterlab/buildutils": "^3.2.3",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
