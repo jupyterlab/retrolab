@@ -21,6 +21,7 @@ import { IRetroShell } from '@retrolab/application';
 import { Poll } from '@lumino/polling';
 
 import { Widget } from '@lumino/widgets';
+import { TrustedComponent } from './trusted';
 
 /**
  * The class for kernel status errors.
@@ -215,12 +216,42 @@ const kernelStatus: JupyterFrontEndPlugin<void> = {
 };
 
 /**
+ * A plugin that adds a Trusted indicator to the menu area
+ */
+const trusted: JupyterFrontEndPlugin<void> = {
+  id: '@retrolab/notebook-extension:trusted',
+  autoStart: true,
+  requires: [IRetroShell, ITranslator],
+  activate: (
+    app: JupyterFrontEnd,
+    shell: IRetroShell,
+    translator: ITranslator
+  ): void => {
+    const onChange = async () => {
+      const current = shell.currentWidget;
+      if (!(current instanceof NotebookPanel)) {
+        return;
+      }
+
+      const notebook = current.content;
+      await current.context.ready;
+
+      const widget = TrustedComponent.create({ notebook, translator });
+      shell.add(widget, 'menu', { rank: 11_000 });
+    };
+
+    shell.currentChanged.connect(onChange);
+  }
+};
+
+/**
  * Export the plugins as default.
  */
 const plugins: JupyterFrontEndPlugin<any>[] = [
   checkpoints,
   kernelLogo,
-  kernelStatus
+  kernelStatus,
+  trusted
 ];
 
 export default plugins;

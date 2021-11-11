@@ -127,6 +127,19 @@ body[data-retro='notebooks'] .jp-Notebook.jp-mod-scrollPastEnd::after {
   white-space: nowrap;
 }
 
+.jp-RetroTrustedStatus {
+  background: var(--jp-layout-color1);
+  color: var(--jp-ui-font-color1);
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: solid grey 1px;
+  cursor: help;
+}
+
+.jp-RetroTrustedStatus-not-trusted {
+  cursor: pointer;
+}
+
 /* Mobile View */
 
 body[data-format='mobile'] .jp-RetroCheckpoint {
