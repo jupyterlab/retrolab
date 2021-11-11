@@ -175,9 +175,6 @@ module.exports = [
         name: 'CORE_FEDERATION',
         shared: createShared(data)
       })
-    ],
-    resolve: {
-      fallback: { util: require.resolve('util/') }
-    }
+    ]
   })
 ].concat(extras);
