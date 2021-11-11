@@ -2,6 +2,7 @@
 // Distributed under the terms of the Modified BSD License.
 
 import { JupyterFrontEnd } from '@jupyterlab/application';
+import { PageConfig } from '@jupyterlab/coreutils';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 
 import { ArrayExt, find, IIterator, iter } from '@lumino/algorithm';
@@ -12,6 +13,7 @@ import { ISignal, Signal } from '@lumino/signaling';
 
 import {
   BoxLayout,
+  Layout,
   Panel,
   SplitPanel,
   StackedPanel,
@@ -43,26 +45,62 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     super();
     this.id = 'main';
 
-    const rootLayout = new BoxLayout();
+    const sidePanelsVisible = PageConfig.getOption('retroPage') === 'notebooks';
 
     this._topHandler = new Private.PanelHandler();
     this._menuHandler = new Private.PanelHandler();
-    const leftHandler = (this._leftHandler = new Private.SideBarHandler());
-    const rightHandler = (this._rightHandler = new Private.SideBarHandler());
-    const mainPanel = (this._main = new Panel());
+    this._leftHandler = new Private.SideBarHandler();
+    this._rightHandler = new Private.SideBarHandler();
+    this._main = new Panel();
+    const topWrapper = (this._topWrapper = new Panel());
+    const menuWrapper = (this._menuWrapper = new Panel());
 
     this._topHandler.panel.id = 'top-panel';
     this._menuHandler.panel.id = 'menu-panel';
     this._main.id = 'main-panel';
 
+    this._spacer = new Widget();
+    this._spacer.id = 'spacer-widget';
+
     // create wrappers around the top and menu areas
-    const topWrapper = (this._topWrapper = new Panel());
     topWrapper.id = 'top-panel-wrapper';
     topWrapper.addWidget(this._topHandler.panel);
 
-    const menuWrapper = (this._menuWrapper = new Panel());
     menuWrapper.id = 'menu-panel-wrapper';
     menuWrapper.addWidget(this._menuHandler.panel);
+
+    if (sidePanelsVisible) {
+      this.layout = this.initLayoutWithSidePanels();
+    } else {
+      this.layout = this.initLayoutWithoutSidePanels();
+    }
+  }
+
+  // TODO: refactor
+  initLayoutWithoutSidePanels(): Layout {
+    const rootLayout = new BoxLayout();
+
+    BoxLayout.setStretch(this._topWrapper, 0);
+    BoxLayout.setStretch(this._menuWrapper, 0);
+    BoxLayout.setStretch(this._main, 1);
+
+    this._spacer = new Widget();
+    this._spacer.id = 'spacer-widget';
+
+    rootLayout.spacing = 0;
+    rootLayout.addWidget(this._topWrapper);
+    rootLayout.addWidget(this._menuWrapper);
+    rootLayout.addWidget(this._spacer);
+    rootLayout.addWidget(this._main);
+
+    return rootLayout;
+  }
+
+  initLayoutWithSidePanels(): Layout {
+    const rootLayout = new BoxLayout();
+    const leftHandler = this._leftHandler;
+    const rightHandler = this._rightHandler;
+    const mainPanel = this._main;
 
     this.leftPanel.id = 'jp-left-stack';
     this.rightPanel.id = 'jp-right-stack';
@@ -80,10 +118,10 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     leftHandler.updated.connect(this._onLayoutModified, this);
     rightHandler.updated.connect(this._onLayoutModified, this);
 
-    BoxLayout.setStretch(topWrapper, 0);
-    BoxLayout.setStretch(menuWrapper, 0);
+    BoxLayout.setStretch(this._topWrapper, 0);
+    BoxLayout.setStretch(this._menuWrapper, 0);
+
     BoxLayout.setStretch(hsplitPanel, 1);
-    BoxLayout.setStretch(mainPanel, 1);
 
     SplitPanel.setStretch(leftHandler.stackedPanel, 0);
     SplitPanel.setStretch(rightHandler.stackedPanel, 0);
@@ -98,16 +136,14 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     // panel.
     hsplitPanel.setRelativeSizes([1, 2.5, 1]);
 
-    this._spacer = new Widget();
-    this._spacer.id = 'spacer-widget';
-
     rootLayout.spacing = 0;
-    rootLayout.addWidget(topWrapper);
-    rootLayout.addWidget(menuWrapper);
+    rootLayout.addWidget(this._topWrapper);
+    rootLayout.addWidget(this._menuWrapper);
     rootLayout.addWidget(this._spacer);
+
     rootLayout.addWidget(hsplitPanel);
 
-    this.layout = rootLayout;
+    return rootLayout;
   }
 
   /**
