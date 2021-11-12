@@ -47,6 +47,11 @@ body[data-retro='notebooks'] .jp-Notebook.jp-mod-scrollPastEnd::after {
 
 /* ---- */
 
+/* TODO: remove when toobar customization is available */
+.jp-NotebookPanel-toolbar .jp-Toolbar-item.jp-KernelName {
+  display: none;
+}
+
 .jp-RetroKernelLogo {
   flex: 0 0 auto;
   display: flex;

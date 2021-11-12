@@ -23,6 +23,8 @@ import { ITranslator } from '@jupyterlab/translation';
 
 import { RetroApp, IRetroShell } from '@retrolab/application';
 
+import { each } from '@lumino/algorithm';
+
 import { Poll } from '@lumino/polling';
 
 import { Widget } from '@lumino/widgets';
@@ -177,12 +179,26 @@ const kernelName: JupyterFrontEndPlugin<void> = {
         return;
       }
       const sessionContext = current.sessionContext;
-      const widget = Toolbar.createKernelNameItem(
+
+      // TODO: remove this when toolbar customization is available
+      each(current.toolbar.children(), widget => {
+        const w = widget as any;
+        if (w['_statusNames']) {
+          w.dispose();
+          w.parent = null;
+        }
+      });
+
+      const name = Toolbar.createKernelNameItem(
         sessionContext,
         sessionDialogs,
         translator
       );
-      app.shell.add(widget, 'menu', { rank: 12_0000 });
+
+      const status = Toolbar.createKernelStatusItem(sessionContext, translator);
+
+      app.shell.add(name, 'menu', { rank: 12_0000 });
+      app.shell.add(status, 'menu', { rank: 12_0010 });
     };
 
     shell.currentChanged.connect(onChange);
@@ -238,6 +254,7 @@ const kernelStatus: JupyterFrontEndPlugin<void> = {
       if (!(current instanceof NotebookPanel)) {
         return;
       }
+
       const sessionContext = current.sessionContext;
       sessionContext.statusChanged.connect(onStatusChanged);
     };

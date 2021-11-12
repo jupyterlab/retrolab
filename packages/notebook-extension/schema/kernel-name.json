@@ -1,0 +1,22 @@
+{
+  "title": "RetroLab Kernel Name",
+  "description": "RetroLab Kernel Name Settings",
+  "jupyter.lab.toolbars": {
+    "Notebook": [
+      { "name": "kernelName", "rank": -1, "disabled": true },
+      { "name": "kernelStatus", "rank": -1, "disabled": true }
+    ]
+  },
+  "jupyter.lab.transform": true,
+  "additionalProperties": false,
+  "properties": {
+    "toolbar": {
+      "title": "Notebook panel toolbar items",
+      "items": {
+        "$ref": "#/definitions/toolbarItem"
+      },
+      "type": "array",
+      "default": []
+    }
+  }
+}
