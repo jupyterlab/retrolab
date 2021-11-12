@@ -336,12 +336,12 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
         if (this.sidePanelsVisible()) {
           return this._leftHandler.stackedPanel.widgets;
         }
-        throw new Error(`${area} area is not available on this page`);
+        throw new Error(`Invalid area: ${area}`);
       case 'right':
         if (this.sidePanelsVisible()) {
           return this._rightHandler.stackedPanel.widgets;
         }
-        throw new Error(`${area} area is not available on this page`);
+        throw new Error(`Invalid area: ${area}`);
       default:
         throw new Error(`Invalid area: ${area}`);
     }
