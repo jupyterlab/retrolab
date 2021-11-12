@@ -6,18 +6,24 @@ import { IRetroShell, RetroShell, Shell } from '@retrolab/application';
 import { JupyterFrontEnd } from '@jupyterlab/application';
 
 import { toArray } from '@lumino/algorithm';
-
 import { Widget } from '@lumino/widgets';
 
-describe('Shell', () => {
+describe('Shell for notebooks', () => {
   let shell: IRetroShell;
+  let sidePanelsVisibleSpy: jest.SpyInstance;
 
   beforeEach(() => {
     shell = new RetroShell();
+    sidePanelsVisibleSpy = jest
+      .spyOn(shell, 'sidePanelsVisible')
+      .mockImplementation(() => {
+        return true;
+      });
     Widget.attach(shell, document.body);
   });
 
   afterEach(() => {
+    sidePanelsVisibleSpy.mockRestore();
     shell.dispose();
   });
 

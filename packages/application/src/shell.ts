@@ -45,8 +45,6 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     super();
     this.id = 'main';
 
-    const sidePanelsVisible = PageConfig.getOption('retroPage') === 'notebooks';
-
     this._topHandler = new Private.PanelHandler();
     this._menuHandler = new Private.PanelHandler();
     this._leftHandler = new Private.SideBarHandler();
@@ -72,7 +70,7 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
     BoxLayout.setStretch(this._topWrapper, 0);
     BoxLayout.setStretch(this._menuWrapper, 0);
 
-    if (sidePanelsVisible) {
+    if (this.sidePanelsVisible()) {
       this.layout = this.initLayoutWithSidePanels();
     } else {
       this.layout = this.initLayoutWithoutSidePanels();
@@ -202,9 +200,16 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
    * Activate a widget in its area.
    */
   activateById(id: string): void {
-    const widget = find(this.widgets('main'), w => w.id === id);
-    if (widget) {
-      widget.activate();
+    // Search all areas that can have widgets for this widget, starting with main.
+    for (const area of ['main', 'top', 'left', 'right', 'menu']) {
+      if ((area === 'left' || area === 'right') && !this.sidePanelsVisible()) {
+        continue;
+      }
+
+      const widget = find(this.widgets(area), w => w.id === id);
+      if (widget) {
+        widget.activate();
+      }
     }
   }
 
@@ -241,9 +246,15 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
         this._currentChanged.emit(void 0);
         break;
       case 'left':
-        return this._leftHandler.addWidget(widget, rank);
+        if (this.sidePanelsVisible()) {
+          return this._leftHandler.addWidget(widget, rank);
+        }
+        throw new Error(`${area} area is not available on this page`);
       case 'right':
-        return this._rightHandler.addWidget(widget, rank);
+        if (this.sidePanelsVisible()) {
+          return this._rightHandler.addWidget(widget, rank);
+        }
+        throw new Error(`${area} area is not available on this page`);
       default:
         throw new Error(`Cannot add widget to area: ${area}`);
     }
@@ -269,6 +280,9 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
    * Expand the left panel to show the sidebar with its widget.
    */
   expandLeft(): void {
+    if (!this.sidePanelsVisible()) {
+      throw new Error('Left panel is not available on this page');
+    }
     this.leftPanel.show();
     this._leftHandler.expand(); // Show the current widget, if any
     this._onLayoutModified();
@@ -278,6 +292,9 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
    * Collapse the left panel
    */
   collapseLeft(): void {
+    if (!this.sidePanelsVisible()) {
+      throw new Error('Left panel is not available on this page');
+    }
     this._leftHandler.collapse();
     this.leftPanel.hide();
     this._onLayoutModified();
@@ -287,6 +304,9 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
    * Expand the right panel to show the sidebar with its widget.
    */
   expandRight(): void {
+    if (!this.sidePanelsVisible()) {
+      throw new Error('Right panel is not available on this page');
+    }
     this.rightPanel.show();
     this._rightHandler.expand(); // Show the current widget, if any
     this._onLayoutModified();
@@ -296,12 +316,15 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
    * Collapse the right panel
    */
   collapseRight(): void {
+    if (!this.sidePanelsVisible()) {
+      throw new Error('Right panel is not available on this page');
+    }
     this._rightHandler.collapse();
     this.rightPanel.hide();
     this._onLayoutModified();
   }
 
-  widgetsList(area: Shell.Area): readonly Widget[] {
+  widgetsList(area?: string): readonly Widget[] {
     switch (area ?? 'main') {
       case 'top':
         return this._topHandler.panel.widgets;
@@ -310,9 +333,15 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
       case 'main':
         return this._main.widgets;
       case 'left':
-        return this._leftHandler.stackedPanel.widgets;
+        if (this.sidePanelsVisible()) {
+          return this._leftHandler.stackedPanel.widgets;
+        }
+        throw new Error(`${area} area is not available on this page`);
       case 'right':
-        return this._rightHandler.stackedPanel.widgets;
+        if (this.sidePanelsVisible()) {
+          return this._rightHandler.stackedPanel.widgets;
+        }
+        throw new Error(`${area} area is not available on this page`);
       default:
         throw new Error(`Invalid area: ${area}`);
     }
@@ -323,7 +352,7 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
    *
    * @param area The area
    */
-  widgets(area: Shell.Area): IIterator<Widget> {
+  widgets(area?: string): IIterator<Widget> {
     return iter(this.widgetsList(area));
   }
 
@@ -335,6 +364,15 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
    */
   isEmpty(area: Shell.Area): boolean {
     return this.widgetsList(area).length === 0;
+  }
+
+  /**
+   * Can the shell display a left or right panel?
+   *
+   * @returns True if the left and right side panels could be shown, false otherwise
+   */
+  sidePanelsVisible(): boolean {
+    return PageConfig.getOption('retroPage') === 'notebooks';
   }
 
   /**
