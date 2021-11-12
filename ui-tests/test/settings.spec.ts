@@ -8,10 +8,13 @@ import { expect } from '@playwright/test';
 test.use({ autoGoto: false });
 
 test.describe('Settings', () => {
-  test('Should be persisted after reloading the page', async ({ page }) => {
+  test('Should be persisted after reloading the page', async ({
+    page,
+    tmpPath
+  }) => {
     const showHeaderPath = 'View>Show Header';
 
-    await page.goto('tree');
+    await page.goto(`tree/${tmpPath}`);
 
     await page.menu.clickMenuItem(showHeaderPath);
     await page.reload({ waitUntil: 'networkidle' });
