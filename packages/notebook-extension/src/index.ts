@@ -6,7 +6,12 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 
-import { ISessionContext, DOMUtils } from '@jupyterlab/apputils';
+import {
+  ISessionContext,
+  DOMUtils,
+  Toolbar,
+  ISessionContextDialogs
+} from '@jupyterlab/apputils';
 
 import { Text, Time } from '@jupyterlab/coreutils';
 
@@ -153,6 +158,38 @@ const kernelLogo: JupyterFrontEndPlugin<void> = {
 };
 
 /**
+ * A plugin to display the kernel name in the menu bar.
+ */
+const kernelName: JupyterFrontEndPlugin<void> = {
+  id: '@retrolab/notebook-extension:kernel-name',
+  autoStart: true,
+  requires: [IRetroShell, ITranslator],
+  optional: [ISessionContextDialogs],
+  activate: (
+    app: JupyterFrontEnd,
+    shell: IRetroShell,
+    translator: ITranslator,
+    sessionDialogs: ISessionContextDialogs
+  ) => {
+    const onChange = async () => {
+      const current = shell.currentWidget;
+      if (!(current instanceof NotebookPanel)) {
+        return;
+      }
+      const sessionContext = current.sessionContext;
+      const widget = Toolbar.createKernelNameItem(
+        sessionContext,
+        sessionDialogs,
+        translator
+      );
+      app.shell.add(widget, 'menu', { rank: 12_0000 });
+    };
+
+    shell.currentChanged.connect(onChange);
+  }
+};
+
+/**
  * A plugin to display the kernel status;
  */
 const kernelStatus: JupyterFrontEndPlugin<void> = {
@@ -230,6 +267,7 @@ const paths: JupyterFrontEndPlugin<JupyterFrontEnd.IPaths> = {
 const plugins: JupyterFrontEndPlugin<any>[] = [
   checkpoints,
   kernelLogo,
+  kernelName,
   kernelStatus
 ];
 
