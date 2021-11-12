@@ -9,15 +9,19 @@ test.use({ autoGoto: false });
 
 test.describe('Settings', () => {
   test('Should be persisted after reloading the page', async ({ page }) => {
+    const showHeaderPath = 'View>Show Header';
+
     await page.goto('tree');
-    await page.menu.clickMenuItem('View>Show Header');
 
-    await page.reload();
+    await page.menu.clickMenuItem(showHeaderPath);
+    await page.reload({ waitUntil: 'networkidle' });
 
-    const logo = await page.evaluate(() => {
-      return document.querySelector('#jp-RetroLogo');
-    });
+    expect(await page.screenshot()).toMatchSnapshot('top-hidden.png');
 
-    expect(logo).toBeFalsy();
+    await page.menu.clickMenuItem(showHeaderPath);
+    await page.reload({ waitUntil: 'networkidle' });
+
+    await page.menu.getMenuItem(showHeaderPath);
+    expect(await page.screenshot()).toMatchSnapshot('top-visible.png');
   });
 });
