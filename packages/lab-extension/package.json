@@ -43,21 +43,21 @@
     "watch:src": "tsc -w"
   },
   "dependencies": {
-    "@jupyterlab/application": "^3.2.3",
-    "@jupyterlab/apputils": "^3.2.3",
-    "@jupyterlab/coreutils": "^5.2.3",
-    "@jupyterlab/docregistry": "^3.2.3",
-    "@jupyterlab/mainmenu": "^3.2.3",
-    "@jupyterlab/notebook": "^3.2.3",
-    "@jupyterlab/translation": "^3.2.3",
-    "@jupyterlab/ui-components": "^3.2.3",
+    "@jupyterlab/application": "^3.2.4",
+    "@jupyterlab/apputils": "^3.2.4",
+    "@jupyterlab/coreutils": "^5.2.4",
+    "@jupyterlab/docregistry": "^3.2.4",
+    "@jupyterlab/mainmenu": "^3.2.4",
+    "@jupyterlab/notebook": "^3.2.4",
+    "@jupyterlab/translation": "^3.2.4",
+    "@jupyterlab/ui-components": "^3.2.4",
     "@lumino/commands": "^1.15.0",
     "@lumino/disposable": "^1.7.0",
     "@retrolab/application": "^0.3.13",
     "@retrolab/ui-components": "^0.3.13"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "^3.2.3",
+    "@jupyterlab/builder": "^3.2.4",
     "rimraf": "~3.0.0",
     "typescript": "~4.1.3"
   },
