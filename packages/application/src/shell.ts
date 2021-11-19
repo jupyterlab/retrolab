@@ -169,6 +169,20 @@ export class RetroShell extends Widget implements JupyterFrontEnd.IShell {
   }
 
   /**
+   * Get the left area handler
+   */
+  get leftHandler(): Private.SideBarHandler {
+    return this._leftHandler;
+  }
+
+  /**
+   * Get the right area handler
+   */
+  get rightHandler(): Private.SideBarHandler {
+    return this._rightHandler;
+  }
+
+  /**
    * Shortcut to get the left area handler's stacked panel
    */
   get leftPanel(): StackedPanel {

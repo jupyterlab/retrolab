@@ -37,7 +37,7 @@ import { PromiseDelegate } from '@lumino/coreutils';
 
 import { DisposableDelegate, DisposableSet } from '@lumino/disposable';
 
-import { Widget } from '@lumino/widgets';
+import { Menu, Widget } from '@lumino/widgets';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 
 /**
@@ -550,10 +550,17 @@ const sidebarVisibility: JupyterFrontEndPlugin<void> = {
 
     const trans = translator.load('retrolab');
 
+    /* Arguments for toggleLeft command:
+     * title, widget title to show in the menu
+     * id, widget ID to activate in the sidebar
+     */
     app.commands.addCommand(CommandIDs.toggleLeft, {
-      label: trans.__('Show Left Sidebar'),
-      execute: () => {
+      label: args => args['title'] as string,
+      caption: args =>
+        trans.__('Show %1 in the left sidebar', args['title'] as string),
+      execute: args => {
         if (retroShell.leftCollapsed) {
+          retroShell.activateById(args['id'] as string);
           retroShell.expandLeft();
         } else {
           retroShell.collapseLeft();
@@ -562,34 +569,41 @@ const sidebarVisibility: JupyterFrontEndPlugin<void> = {
           }
         }
       },
-      isToggled: () => !retroShell.leftCollapsed,
-      isEnabled: () => !retroShell.isEmpty('left')
-    });
-
-    app.commands.addCommand(CommandIDs.toggleRight, {
-      label: trans.__('Show Right Sidebar'),
-      execute: () => {
-        if (retroShell.rightCollapsed) {
-          retroShell.expandRight();
-        } else {
-          retroShell.collapseRight();
-          if (retroShell.currentWidget) {
-            retroShell.activateById(retroShell.currentWidget.id);
-          }
+      isToggled: args => {
+        if (!retroShell.leftCollapsed) {
+          return false;
         }
-      },
-      isToggled: () => !retroShell.rightCollapsed,
-      isEnabled: () => !retroShell.isEmpty('right')
+        const currentWidget = retroShell.leftHandler.current;
+        if (!currentWidget) {
+          return false;
+        }
+
+        return currentWidget.id === (args['id'] as string);
+      }
     });
 
-    if (menu) {
-      menu.viewMenu.addGroup(
-        [
-          { command: CommandIDs.toggleLeft },
-          { command: CommandIDs.toggleRight }
-        ],
-        2
-      );
+    const leftSidebarMenu = new Menu({ commands: app.commands });
+    leftSidebarMenu.title.label = trans.__('Show Left Sidebar');
+
+    const leftWidgets = retroShell.widgetsList('left');
+    leftWidgets.forEach(widget => {
+      leftSidebarMenu.addItem({
+        command: CommandIDs.toggleLeft,
+        args: {
+          title: widget.title.caption,
+          id: widget.id
+        }
+      });
+    });
+
+    const menuItemsToAdd: Menu.IItemOptions[] = [];
+    if (leftWidgets.length > 0) {
+      menuItemsToAdd.push({ type: 'submenu', submenu: leftSidebarMenu });
+    }
+
+    // TODO: Add right sidebar menu item with submenu.
+    if (menu && menuItemsToAdd) {
+      menu.viewMenu.addGroup(menuItemsToAdd, 2);
     }
   },
   autoStart: true
