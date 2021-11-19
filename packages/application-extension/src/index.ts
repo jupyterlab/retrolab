@@ -65,14 +65,9 @@ namespace CommandIDs {
   export const toggleTop = 'application:toggle-top';
 
   /**
-   * Toggle left sidebar visibility
+   * Toggle sidebar visibility
    */
-  export const toggleLeft = 'application:toggle-left';
-
-  /**
-   * Toggle right sidebar visibility
-   */
-  export const toggleRight = 'application:toggle-right';
+  export const togglePanel = 'application:toggle-panel';
 
   /**
    * Toggle the Zen mode
@@ -550,23 +545,53 @@ const sidebarVisibility: JupyterFrontEndPlugin<void> = {
 
     const trans = translator.load('retrolab');
 
-    /* Arguments for toggleLeft command:
+    /* Arguments for togglePanel command:
+     * side, left or right area
      * title, widget title to show in the menu
      * id, widget ID to activate in the sidebar
      */
-    app.commands.addCommand(CommandIDs.toggleLeft, {
+    app.commands.addCommand(CommandIDs.togglePanel, {
       label: args => args['title'] as string,
-      caption: args =>
-        trans.__('Show %1 in the left sidebar', args['title'] as string),
+      caption: args => {
+        // We do not substitute the parameter into the string because the parameter is not
+        // localized (e.g., it is always 'left') even though the string is localized.
+        if (args['side'] === 'left') {
+          return trans.__(
+            'Show %1 in the left sidebar',
+            args['title'] as string
+          );
+        } else if (args['side'] === 'right') {
+          return trans.__(
+            'Show %1 in the right sidebar',
+            args['title'] as string
+          );
+        }
+        return trans.__('Show %1 in the sidebar', args['title'] as string);
+      },
       execute: args => {
-        if (retroShell.leftCollapsed) {
-          retroShell.activateById(args['id'] as string);
-          retroShell.expandLeft();
-        } else {
-          retroShell.collapseLeft();
-          if (retroShell.currentWidget) {
-            retroShell.activateById(retroShell.currentWidget.id);
-          }
+        switch (args['side'] as string) {
+          case 'left':
+            if (retroShell.leftCollapsed) {
+              retroShell.activateById(args['id'] as string);
+              retroShell.expandLeft();
+            } else {
+              retroShell.collapseLeft();
+              if (retroShell.currentWidget) {
+                retroShell.activateById(retroShell.currentWidget.id);
+              }
+            }
+            break;
+          case 'right':
+            if (retroShell.rightCollapsed) {
+              retroShell.activateById(args['id'] as string);
+              retroShell.expandRight();
+            } else {
+              retroShell.collapseRight();
+              if (retroShell.currentWidget) {
+                retroShell.activateById(retroShell.currentWidget.id);
+              }
+            }
+            break;
         }
       },
       isToggled: args => {
@@ -588,8 +613,23 @@ const sidebarVisibility: JupyterFrontEndPlugin<void> = {
     const leftWidgets = retroShell.widgetsList('left');
     leftWidgets.forEach(widget => {
       leftSidebarMenu.addItem({
-        command: CommandIDs.toggleLeft,
+        command: CommandIDs.togglePanel,
         args: {
+          side: 'left',
+          title: widget.title.caption,
+          id: widget.id
+        }
+      });
+    });
+
+    const rightSidebarMenu = new Menu({ commands: app.commands });
+    rightSidebarMenu.title.label = trans.__('Show Right Sidebar');
+    const rightWidgets = retroShell.widgetsList('right');
+    rightWidgets.forEach(widget => {
+      rightSidebarMenu.addItem({
+        command: CommandIDs.togglePanel,
+        args: {
+          side: 'right',
           title: widget.title.caption,
           id: widget.id
         }
@@ -600,8 +640,10 @@ const sidebarVisibility: JupyterFrontEndPlugin<void> = {
     if (leftWidgets.length > 0) {
       menuItemsToAdd.push({ type: 'submenu', submenu: leftSidebarMenu });
     }
+    if (rightWidgets.length > 0) {
+      menuItemsToAdd.push({ type: 'submenu', submenu: rightSidebarMenu });
+    }
 
-    // TODO: Add right sidebar menu item with submenu.
     if (menu && menuItemsToAdd) {
       menu.viewMenu.addGroup(menuItemsToAdd, 2);
     }
