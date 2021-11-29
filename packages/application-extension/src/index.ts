@@ -90,6 +90,11 @@ namespace CommandIDs {
   export const openTree = 'application:open-tree';
 
   /**
+   * Rename the current document
+   */
+  export const rename = 'application:rename';
+
+  /**
    * Resolve tree path
    */
   export const resolveTree = 'application:resolve-tree';
@@ -204,14 +209,34 @@ const opener: JupyterFrontEndPlugin<void> = {
 };
 
 /**
- * A plugin to dispose the Tabs menu
+ * A plugin to customize menus
+ *
+ * TODO: use this plugin to customize the menu items and their order
  */
-const noTabsMenu: JupyterFrontEndPlugin<void> = {
-  id: '@retrolab/application-extension:no-tabs-menu',
+const menus: JupyterFrontEndPlugin<void> = {
+  id: '@retrolab/application-extension:menus',
   requires: [IMainMenu],
   autoStart: true,
   activate: (app: JupyterFrontEnd, menu: IMainMenu) => {
+    // always disable the Tabs menu
     menu.tabsMenu.dispose();
+
+    const page = PageConfig.getOption('retroPage');
+    switch (page) {
+      case 'consoles':
+      case 'terminals':
+      case 'tree':
+        menu.editMenu.dispose();
+        menu.kernelMenu.dispose();
+        menu.runMenu.dispose();
+        break;
+      case 'edit':
+        menu.kernelMenu.dispose();
+        menu.runMenu.dispose();
+        break;
+      default:
+        break;
+    }
   }
 };
 
@@ -401,19 +426,23 @@ const tabTitle: JupyterFrontEndPlugin<void> = {
 const title: JupyterFrontEndPlugin<void> = {
   id: '@retrolab/application-extension:title',
   autoStart: true,
-  requires: [IRetroShell],
+  requires: [IRetroShell, ITranslator],
   optional: [IDocumentManager, IRouter],
   activate: (
     app: JupyterFrontEnd,
     shell: IRetroShell,
+    translator: ITranslator,
     docManager: IDocumentManager | null,
     router: IRouter | null
   ) => {
+    const { commands } = app;
+    const trans = translator.load('retrolab');
+
     const widget = new Widget();
     widget.id = 'jp-title';
     app.shell.add(widget, 'top', { rank: 10 });
 
-    const addTitle = async () => {
+    const addTitle = async (): Promise<void> => {
       const current = shell.currentWidget;
       if (!current || !(current instanceof DocumentWidget)) {
         return;
@@ -421,6 +450,7 @@ const title: JupyterFrontEndPlugin<void> = {
       if (widget.node.children.length > 0) {
         return;
       }
+
       const h = document.createElement('h1');
       h.textContent = current.title.label;
       widget.node.appendChild(h);
@@ -428,38 +458,56 @@ const title: JupyterFrontEndPlugin<void> = {
       if (!docManager) {
         return;
       }
+
+      const isEnabled = () => {
+        const { currentWidget } = shell;
+        return !!(currentWidget && docManager.contextForWidget(currentWidget));
+      };
+
+      commands.addCommand(CommandIDs.rename, {
+        label: () => trans.__('Rename…'),
+        isEnabled,
+        execute: async () => {
+          if (!isEnabled()) {
+            return;
+          }
+
+          const result = await renameDialog(docManager, current.context.path);
+
+          // activate the current widget to bring the focus
+          if (current) {
+            current.activate();
+          }
+
+          if (result === null) {
+            return;
+          }
+
+          const newPath = current.context.path ?? result.path;
+          const basename = PathExt.basename(newPath);
+          h.textContent = basename;
+          if (!router) {
+            return;
+          }
+          const matches = router.current.path.match(TREE_PATTERN) ?? [];
+          const [, route, path] = matches;
+          if (!route || !path) {
+            return;
+          }
+          const encoded = encodeURIComponent(newPath);
+          router.navigate(`/retro/${route}/${encoded}`, {
+            skipRouting: true
+          });
+        }
+      });
+
       widget.node.onclick = async () => {
-        const result = await renameDialog(docManager, current.context.path);
-
-        // activate the current widget to bring the focus
-        if (current) {
-          current.activate();
-        }
-
-        if (result === null) {
-          return;
-        }
-
-        const newPath = current.context.path ?? result.path;
-        const basename = PathExt.basename(newPath);
-        h.textContent = basename;
-        if (!router) {
-          return;
-        }
-        const matches = router.current.path.match(TREE_PATTERN) ?? [];
-        const [, route, path] = matches;
-        if (!route || !path) {
-          return;
-        }
-        const encoded = encodeURIComponent(newPath);
-        router.navigate(`/retro/${route}/${encoded}`, {
-          skipRouting: true
-        });
+        void commands.execute(CommandIDs.rename);
       };
     };
 
     shell.currentChanged.connect(addTitle);
-    addTitle();
+    void addTitle();
   }
 };
 
@@ -496,11 +544,16 @@ const topVisibility: JupyterFrontEndPlugin<void> = {
       menu.viewMenu.addGroup([{ command: CommandIDs.toggleTop }], 2);
     }
 
+    let settingsOverride = false;
+
     if (settingRegistry) {
       const loadSettings = settingRegistry.load(pluginId);
       const updateSettings = (settings: ISettingRegistry.ISettings): void => {
-        const visible = settings.get('visible').composite as boolean;
-        top.setHidden(!visible);
+        const visible = settings.get('visible').composite;
+        if (settings.user.visible !== undefined) {
+          settingsOverride = true;
+          top.setHidden(!visible);
+        }
       };
 
       Promise.all([loadSettings, app.restored])
@@ -516,6 +569,9 @@ const topVisibility: JupyterFrontEndPlugin<void> = {
     }
 
     const onChanged = (): void => {
+      if (settingsOverride) {
+        return;
+      }
       if (app.format === 'desktop') {
         retroShell.expandTop();
       } else {
@@ -525,7 +581,6 @@ const topVisibility: JupyterFrontEndPlugin<void> = {
 
     // listen on format change (mobile and desktop) to make the view more compact
     app.formatChanged.connect(onChanged);
-    onChanged();
   },
   autoStart: true
 };
@@ -761,7 +816,7 @@ const zen: JupyterFrontEndPlugin<void> = {
 const plugins: JupyterFrontEndPlugin<any>[] = [
   dirty,
   logo,
-  noTabsMenu,
+  menus,
   opener,
   pages,
   paths,
