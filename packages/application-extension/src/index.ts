@@ -657,7 +657,7 @@ const sidebarVisibility: JupyterFrontEndPlugin<void> = {
         }
       },
       isToggled: args => {
-        if (!retroShell.leftCollapsed) {
+        if (retroShell.leftCollapsed) {
           return false;
         }
         const currentWidget = retroShell.leftHandler.current;
@@ -672,43 +672,46 @@ const sidebarVisibility: JupyterFrontEndPlugin<void> = {
     const leftSidebarMenu = new Menu({ commands: app.commands });
     leftSidebarMenu.title.label = trans.__('Show Left Sidebar');
 
-    const leftWidgets = retroShell.widgetsList('left');
-    leftWidgets.forEach(widget => {
-      leftSidebarMenu.addItem({
-        command: CommandIDs.togglePanel,
-        args: {
-          side: 'left',
-          title: widget.title.caption,
-          id: widget.id
-        }
-      });
-    });
-
     const rightSidebarMenu = new Menu({ commands: app.commands });
     rightSidebarMenu.title.label = trans.__('Show Right Sidebar');
-    const rightWidgets = retroShell.widgetsList('right');
-    rightWidgets.forEach(widget => {
-      rightSidebarMenu.addItem({
-        command: CommandIDs.togglePanel,
-        args: {
-          side: 'right',
-          title: widget.title.caption,
-          id: widget.id
-        }
+
+    app.restored.then(() => {
+      const leftWidgets = retroShell.widgetsList('left');
+      leftWidgets.forEach(widget => {
+        leftSidebarMenu.addItem({
+          command: CommandIDs.togglePanel,
+          args: {
+            side: 'left',
+            title: widget.title.caption,
+            id: widget.id
+          }
+        });
       });
+
+      const rightWidgets = retroShell.widgetsList('right');
+      rightWidgets.forEach(widget => {
+        rightSidebarMenu.addItem({
+          command: CommandIDs.togglePanel,
+          args: {
+            side: 'right',
+            title: widget.title.caption,
+            id: widget.id
+          }
+        });
+      });
+
+      const menuItemsToAdd: Menu.IItemOptions[] = [];
+      if (leftWidgets.length > 0) {
+        menuItemsToAdd.push({ type: 'submenu', submenu: leftSidebarMenu });
+      }
+      if (rightWidgets.length > 0) {
+        menuItemsToAdd.push({ type: 'submenu', submenu: rightSidebarMenu });
+      }
+
+      if (menu && menuItemsToAdd) {
+        menu.viewMenu.addGroup(menuItemsToAdd, 2);
+      }
     });
-
-    const menuItemsToAdd: Menu.IItemOptions[] = [];
-    if (leftWidgets.length > 0) {
-      menuItemsToAdd.push({ type: 'submenu', submenu: leftSidebarMenu });
-    }
-    if (rightWidgets.length > 0) {
-      menuItemsToAdd.push({ type: 'submenu', submenu: rightSidebarMenu });
-    }
-
-    if (menu && menuItemsToAdd) {
-      menu.viewMenu.addGroup(menuItemsToAdd, 2);
-    }
   },
   autoStart: true
 };
