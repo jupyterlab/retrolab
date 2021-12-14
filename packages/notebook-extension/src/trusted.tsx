@@ -6,7 +6,7 @@ import { ITranslator } from '@jupyterlab/translation';
 
 import { toArray } from '@lumino/algorithm';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const isTrusted = (notebook: Notebook): boolean => {
   const model = notebook.model;
@@ -27,6 +27,11 @@ const isTrusted = (notebook: Notebook): boolean => {
   return trusted === total;
 };
 
+/**
+ * A React component to display the Trusted badge in the menu bar.
+ * @param notebook The Notebook
+ * @param translator The Translation service
+ */
 const TrustedButton = ({
   notebook,
   translator
@@ -37,11 +42,24 @@ const TrustedButton = ({
   const trans = translator.load('retrolab');
   const [trusted, setTrusted] = useState(isTrusted(notebook));
 
-  const trust = async () => {
-    await NotebookActions.trust(notebook, translator);
+  const checkTrust = () => {
     const v = isTrusted(notebook);
     setTrusted(v);
   };
+
+  const trust = async () => {
+    await NotebookActions.trust(notebook, translator);
+    checkTrust();
+  };
+
+  useEffect(() => {
+    notebook.modelContentChanged.connect(checkTrust);
+    notebook.activeCellChanged.connect(checkTrust);
+    return () => {
+      notebook.modelContentChanged.disconnect(checkTrust);
+      notebook.activeCellChanged.disconnect(checkTrust);
+    };
+  });
 
   return (
     <button
