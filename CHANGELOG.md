@@ -2,6 +2,23 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.3.17
+
+([Full Changelog](https://github.com/jupyterlab/retrolab/compare/v0.3.16...b7e4a513c671699feeb756772b8255ae5381a8fd))
+
+### Enhancements made
+
+- Switch cell type from the cell menu [#334](https://github.com/jupyterlab/retrolab/pull/334) ([@jtpio](https://github.com/jtpio))
+- Add `Accel Enter` shortcut to execute a cell [#330](https://github.com/jupyterlab/retrolab/pull/330) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlab/retrolab/graphs/contributors?from=2022-01-07&to=2022-01-27&type=c))
+
+[@davidbrochart](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Adavidbrochart+updated%3A2022-01-07..2022-01-27&type=Issues) | [@github-actions](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Agithub-actions+updated%3A2022-01-07..2022-01-27&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ajtpio+updated%3A2022-01-07..2022-01-27&type=Issues) | [@meeseeksmachine](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ameeseeksmachine+updated%3A2022-01-07..2022-01-27&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.3.16
 
 ([Full Changelog](https://github.com/jupyterlab/retrolab/compare/v0.3.15...41a51ac002582baac9a89a2eb3426ac26e16a46f))
@@ -16,8 +33,6 @@
 ([GitHub contributors page for this release](https://github.com/jupyterlab/retrolab/graphs/contributors?from=2022-01-03&to=2022-01-07&type=c))
 
 [@davidbrochart](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Adavidbrochart+updated%3A2022-01-03..2022-01-07&type=Issues) | [@github-actions](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Agithub-actions+updated%3A2022-01-03..2022-01-07&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ajtpio+updated%3A2022-01-03..2022-01-07&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3AmartinRenou+updated%3A2022-01-03..2022-01-07&type=Issues) | [@welcome](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Awelcome+updated%3A2022-01-03..2022-01-07&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.3.15
 
