@@ -8,7 +8,7 @@
 
 ### Enhancements made
 
-- Backport PR #328: Switch cell type from the cell menu [#334](https://github.com/jupyterlab/retrolab/pull/334) ([@jtpio](https://github.com/jtpio))
+- Switch cell type from the cell menu [#334](https://github.com/jupyterlab/retrolab/pull/334) ([@jtpio](https://github.com/jtpio))
 - Add `Accel Enter` shortcut to execute a cell [#330](https://github.com/jupyterlab/retrolab/pull/330) ([@jtpio](https://github.com/jtpio))
 
 ### Contributors to this release
