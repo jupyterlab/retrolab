@@ -9,5 +9,6 @@ dependencies:
 - matplotlib
 - numpy
 - nodejs
+- pip
 - python >=3.9,<3.10
 - xeus-python
