@@ -2,6 +2,119 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.4.0a0
+
+([Full Changelog](https://github.com/jupyterlab/retrolab/compare/@retrolab/app@0.3.16...879e644e172dee4b37f5f3062877e61290e1fcdb))
+
+### Enhancements made
+
+- Update to JupyterLab 4.0 alpha [#319](https://github.com/jupyterlab/retrolab/pull/319) ([@jtpio](https://github.com/jtpio))
+
+### Maintenance and upkeep improvements
+
+- Drop support for `retro_logo` [#324](https://github.com/jupyterlab/retrolab/pull/324) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlab/retrolab/graphs/contributors?from=2022-01-07&to=2022-01-21&type=c))
+
+[@davidbrochart](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Adavidbrochart+updated%3A2022-01-07..2022-01-21&type=Issues) | [@github-actions](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Agithub-actions+updated%3A2022-01-07..2022-01-21&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ajtpio+updated%3A2022-01-07..2022-01-21&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
+## 0.3.18
+
+([Full Changelog](https://github.com/jupyterlab/retrolab/compare/v0.3.17...cc611cf7d114ac0ac73517e379c39899c74d0c57))
+
+### Bugs fixed
+
+- Add `@jupyterlab/notebook-extension:export` plugin [#337](https://github.com/jupyterlab/retrolab/pull/337) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlab/retrolab/graphs/contributors?from=2022-01-27&to=2022-01-27&type=c))
+
+[@github-actions](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Agithub-actions+updated%3A2022-01-27..2022-01-27&type=Issues) | [@meeseeksmachine](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ameeseeksmachine+updated%3A2022-01-27..2022-01-27&type=Issues)
+
+## 0.3.17
+
+([Full Changelog](https://github.com/jupyterlab/retrolab/compare/v0.3.16...b7e4a513c671699feeb756772b8255ae5381a8fd))
+
+### Enhancements made
+
+- Switch cell type from the cell menu [#334](https://github.com/jupyterlab/retrolab/pull/334) ([@jtpio](https://github.com/jtpio))
+- Add `Accel Enter` shortcut to execute a cell [#330](https://github.com/jupyterlab/retrolab/pull/330) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlab/retrolab/graphs/contributors?from=2022-01-07&to=2022-01-27&type=c))
+
+[@davidbrochart](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Adavidbrochart+updated%3A2022-01-07..2022-01-27&type=Issues) | [@github-actions](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Agithub-actions+updated%3A2022-01-07..2022-01-27&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ajtpio+updated%3A2022-01-07..2022-01-27&type=Issues) | [@meeseeksmachine](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ameeseeksmachine+updated%3A2022-01-07..2022-01-27&type=Issues)
+
+## 0.3.16
+
+([Full Changelog](https://github.com/jupyterlab/retrolab/compare/v0.3.15...41a51ac002582baac9a89a2eb3426ac26e16a46f))
+
+### Maintenance and upkeep improvements
+
+- Update to the `@jupyterlab` 3.2.6 packages [#321](https://github.com/jupyterlab/retrolab/pull/321) ([@jtpio](https://github.com/jtpio))
+- Remove allsettled polyfill [#318](https://github.com/jupyterlab/retrolab/pull/318) ([@martinRenou](https://github.com/martinRenou))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlab/retrolab/graphs/contributors?from=2022-01-03&to=2022-01-07&type=c))
+
+[@davidbrochart](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Adavidbrochart+updated%3A2022-01-03..2022-01-07&type=Issues) | [@github-actions](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Agithub-actions+updated%3A2022-01-03..2022-01-07&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ajtpio+updated%3A2022-01-03..2022-01-07&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3AmartinRenou+updated%3A2022-01-03..2022-01-07&type=Issues) | [@welcome](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Awelcome+updated%3A2022-01-03..2022-01-07&type=Issues)
+
+## 0.3.15
+
+([Full Changelog](https://github.com/jupyterlab/retrolab/compare/v0.3.14...6815878b79fa1e43bff706bb42ff3a2ee5bc23bd))
+
+### Enhancements made
+
+- Enable auto scrolling for outputs by default [#288](https://github.com/jupyterlab/retrolab/pull/288) ([@jtpio](https://github.com/jtpio))
+
+### Maintenance and upkeep improvements
+
+- Fix handling of the Python version in the release scripts [#315](https://github.com/jupyterlab/retrolab/pull/315) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlab/retrolab/graphs/contributors?from=2021-12-28&to=2022-01-03&type=c))
+
+[@github-actions](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Agithub-actions+updated%3A2021-12-28..2022-01-03&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ajtpio+updated%3A2021-12-28..2022-01-03&type=Issues)
+
+## 0.3.14
+
+([Full Changelog](https://github.com/jupyterlab/retrolab/compare/v0.3.13...ec926de136ba17afd3335e8ad452b16bb173986b))
+
+### Enhancements made
+
+- Interface switcher menu [#309](https://github.com/jupyterlab/retrolab/pull/309) ([@jtpio](https://github.com/jtpio))
+- Strip .ipynb extension for display in header and tab title [#296](https://github.com/jupyterlab/retrolab/pull/296) ([@jweill-aws](https://github.com/jweill-aws))
+- Add extension for document-scoped search [#294](https://github.com/jupyterlab/retrolab/pull/294) ([@loichuder](https://github.com/loichuder))
+- Improve menus [#289](https://github.com/jupyterlab/retrolab/pull/289) ([@jtpio](https://github.com/jtpio))
+
+### Maintenance and upkeep improvements
+
+- Remove `playwright` dependency from the `app` folder [#307](https://github.com/jupyterlab/retrolab/pull/307) ([@jtpio](https://github.com/jtpio))
+- Bump playwright version in package.json [#304](https://github.com/jupyterlab/retrolab/pull/304) ([@gabalafou](https://github.com/gabalafou))
+- Switch to `maintainer-tools` action for Binder on PR [#301](https://github.com/jupyterlab/retrolab/pull/301) ([@jtpio](https://github.com/jtpio))
+- Use `maintainer-tools` base setup action [#295](https://github.com/jupyterlab/retrolab/pull/295) ([@jtpio](https://github.com/jtpio))
+- Remove unused build:test task in app [#293](https://github.com/jupyterlab/retrolab/pull/293) ([@loichuder](https://github.com/loichuder))
+- Add UI test for the mobile layout [#292](https://github.com/jupyterlab/retrolab/pull/292) ([@jtpio](https://github.com/jtpio))
+- Enforce labels on PRs [#291](https://github.com/jupyterlab/retrolab/pull/291) ([@jtpio](https://github.com/jtpio))
+
+### Documentation improvements
+
+- add alt text together during the 2021 diy a11y workshop (#1) [#310](https://github.com/jupyterlab/retrolab/pull/310) ([@tonyfast](https://github.com/tonyfast))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlab/retrolab/graphs/contributors?from=2021-11-12&to=2021-12-28&type=c))
+
+[@gabalafou](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Agabalafou+updated%3A2021-11-12..2021-12-28&type=Issues) | [@github-actions](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Agithub-actions+updated%3A2021-11-12..2021-12-28&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ajtpio+updated%3A2021-11-12..2021-12-28&type=Issues) | [@jweill-aws](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ajweill-aws+updated%3A2021-11-12..2021-12-28&type=Issues) | [@loichuder](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Aloichuder+updated%3A2021-11-12..2021-12-28&type=Issues) | [@tonyfast](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Atonyfast+updated%3A2021-11-12..2021-12-28&type=Issues) | [@welcome](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Awelcome+updated%3A2021-11-12..2021-12-28&type=Issues) | [@yuvipanda](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ayuvipanda+updated%3A2021-11-12..2021-12-28&type=Issues)
+
 ## 0.3.13
 
 ([Full Changelog](https://github.com/jupyterlab/retrolab/compare/v0.3.12...a77d66953de2d73931959a131837049322a59216))
@@ -31,8 +144,6 @@
 ([GitHub contributors page for this release](https://github.com/jupyterlab/retrolab/graphs/contributors?from=2021-11-01&to=2021-11-12&type=c))
 
 [@github-actions](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Agithub-actions+updated%3A2021-11-01..2021-11-12&type=Issues) | [@gutow](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Agutow+updated%3A2021-11-01..2021-11-12&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ajtpio+updated%3A2021-11-01..2021-11-12&type=Issues) | [@jweill-aws](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ajweill-aws+updated%3A2021-11-01..2021-11-12&type=Issues) | [@krassowski](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Akrassowski+updated%3A2021-11-01..2021-11-12&type=Issues) | [@welcome](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Awelcome+updated%3A2021-11-01..2021-11-12&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.3.12
 

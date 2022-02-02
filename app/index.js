@@ -5,26 +5,6 @@
 
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 
-// Promise.allSettled polyfill, until our supported browsers implement it
-// See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
-if (Promise.allSettled === undefined) {
-  Promise.allSettled = promises =>
-    Promise.all(
-      promises.map(promise =>
-        promise.then(
-          value => ({
-            status: 'fulfilled',
-            value
-          }),
-          reason => ({
-            status: 'rejected',
-            reason
-          })
-        )
-      )
-    );
-}
-
 require('./style.js');
 require('./extraStyle.js');
 
@@ -84,6 +64,7 @@ async function main() {
     require('@retrolab/application-extension'),
     require('@retrolab/console-extension'),
     require('@retrolab/docmanager-extension'),
+    require('@retrolab/documentsearch-extension'),
     require('@retrolab/help-extension'),
     require('@retrolab/notebook-extension'),
     // to handle opening new tabs after creating a new terminal
@@ -103,7 +84,9 @@ async function main() {
         '@jupyterlab/apputils-extension:settings',
         '@jupyterlab/apputils-extension:state',
         '@jupyterlab/apputils-extension:themes',
-        '@jupyterlab/apputils-extension:themes-palette-menu'
+        '@jupyterlab/apputils-extension:themes-palette-menu',
+        // TODO: rename to @jupyterlab/ when fixed and released upstream
+        '@jupyter/apputils-extension:toolbar-registry'
       ].includes(id)
     ),
     require('@jupyterlab/codemirror-extension').default.filter(({ id }) =>
@@ -123,6 +106,9 @@ async function main() {
       ].includes(id)
     ),
     require('@jupyterlab/docprovider-extension'),
+    require('@jupyterlab/documentsearch-extension').default.filter(({ id }) =>
+      ['@jupyterlab/documentsearch:plugin'].includes(id)
+    ),
     require('@jupyterlab/filebrowser-extension').default.filter(({ id }) =>
       ['@jupyterlab/filebrowser-extension:factory'].includes(id)
     ),
@@ -134,6 +120,7 @@ async function main() {
     require('@jupyterlab/notebook-extension').default.filter(({ id }) =>
       [
         '@jupyterlab/notebook-extension:code-console',
+        '@jupyterlab/notebook-extension:export',
         '@jupyterlab/notebook-extension:factory',
         '@jupyterlab/notebook-extension:tracker',
         '@jupyterlab/notebook-extension:widget-factory'
@@ -147,6 +134,7 @@ async function main() {
     require('@jupyterlab/theme-dark-extension'),
     require('@jupyterlab/translation-extension'),
     // Add the "Hub Control Panel" menu option when running in JupyterHub
+    require('@jupyterlab/user-extension'),
     require('@jupyterlab/hub-extension')
   ];
 

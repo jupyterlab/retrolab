@@ -27,18 +27,19 @@ import { DocumentWidget } from '@jupyterlab/docregistry';
 
 import { IMainMenu } from '@jupyterlab/mainmenu';
 
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
+
 import { ITranslator } from '@jupyterlab/translation';
 
 import { RetroApp, RetroShell, IRetroShell } from '@retrolab/application';
 
-import { jupyterIcon, retroInlineIcon } from '@retrolab/ui-components';
+import { jupyterIcon } from '@retrolab/ui-components';
 
 import { PromiseDelegate } from '@lumino/coreutils';
 
 import { DisposableDelegate, DisposableSet } from '@lumino/disposable';
 
 import { Menu, Widget } from '@lumino/widgets';
-import { ISettingRegistry } from '@jupyterlab/settingregistry';
 
 /**
  * The default notebook factory.
@@ -149,9 +150,7 @@ const logo: JupyterFrontEndPlugin<void> = {
     node.rel = 'noopener noreferrer';
     const logo = new Widget({ node });
 
-    const retroLogo = PageConfig.getOption('retroLogo') === 'true';
-    const icon = retroLogo ? retroInlineIcon : jupyterIcon;
-    icon.element({
+    jupyterIcon.element({
       container: node,
       elementPosition: 'center',
       padding: '2px 2px 2px 8px',
@@ -170,10 +169,12 @@ const opener: JupyterFrontEndPlugin<void> = {
   id: '@retrolab/application-extension:opener',
   autoStart: true,
   requires: [IRouter, IDocumentManager],
+  optional: [ISettingRegistry],
   activate: (
     app: JupyterFrontEnd,
     router: IRouter,
-    docManager: IDocumentManager
+    docManager: IDocumentManager,
+    settingRegistry: ISettingRegistry | null
   ): void => {
     const { commands } = app;
 
@@ -189,9 +190,12 @@ const opener: JupyterFrontEndPlugin<void> = {
 
         const file = decodeURIComponent(path);
         const ext = PathExt.extname(file);
-        app.restored.then(() => {
+        app.restored.then(async () => {
           // TODO: get factory from file type instead?
           if (ext === '.ipynb') {
+            // TODO: fix upstream?
+            await settingRegistry?.load('@jupyterlab/notebook-extension:panel');
+            await Promise.resolve();
             docManager.open(file, NOTEBOOK_FACTORY, undefined, {
               ref: '_noref'
             });
@@ -352,7 +356,9 @@ const shell: JupyterFrontEndPlugin<IRetroShell> = {
 };
 
 /**
- * A plugin to provide a spacer at rank 10000 for flex panels
+ * A plugin to provide a spacer at rank 900 for flex panels
+ * TODO: reuse upstream @jupyterlab/application-extension:top-spacer plugin when fixed
+ * in https://github.com/jupyterlab/jupyterlab/pull/11900
  */
 const spacer: JupyterFrontEndPlugin<void> = {
   id: '@retrolab/application-extension:spacer',
@@ -361,12 +367,12 @@ const spacer: JupyterFrontEndPlugin<void> = {
     const top = new Widget();
     top.id = DOMUtils.createDomID();
     top.addClass('jp-RetroSpacer');
-    app.shell.add(top, 'top', { rank: 10000 });
+    app.shell.add(top, 'top', { rank: 900 });
 
     const menu = new Widget();
     menu.id = DOMUtils.createDomID();
     menu.addClass('jp-RetroSpacer');
-    app.shell.add(menu, 'menu', { rank: 10000 });
+    app.shell.add(menu, 'menu', { rank: 900 });
   }
 };
 
