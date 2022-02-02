@@ -8,11 +8,17 @@ import {
 
 import { ISessionContext, DOMUtils } from '@jupyterlab/apputils';
 
+import { CodeCell } from '@jupyterlab/cells';
+
 import { Text, Time } from '@jupyterlab/coreutils';
 
 import { IDocumentManager } from '@jupyterlab/docmanager';
 
-import { NotebookPanel } from '@jupyterlab/notebook';
+import { IMainMenu } from '@jupyterlab/mainmenu';
+
+import { NotebookPanel, INotebookTracker } from '@jupyterlab/notebook';
+
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
 
 import { ITranslator } from '@jupyterlab/translation';
 
@@ -20,7 +26,7 @@ import { IRetroShell } from '@retrolab/application';
 
 import { Poll } from '@lumino/polling';
 
-import { Widget } from '@lumino/widgets';
+import { Menu, Widget } from '@lumino/widgets';
 
 /**
  * The class for kernel status errors.
@@ -41,6 +47,11 @@ const KERNEL_STATUS_INFO_CLASS = 'jp-RetroKernelStatus-info';
  * The class to fade out the kernel status.
  */
 const KERNEL_STATUS_FADE_OUT_CLASS = 'jp-RetroKernelStatus-fade';
+
+/**
+ * The class for scrolled outputs
+ */
+const SCROLLED_OUTPUTS_CLASS = 'jp-mod-outputsScrolled';
 
 /**
  * A plugin for the checkpoint indicator
@@ -215,12 +226,163 @@ const kernelStatus: JupyterFrontEndPlugin<void> = {
 };
 
 /**
+ * A plugin to customize notebook related menu entries
+ * TODO: switch to settings define menus when fixed upstream: https://github.com/jupyterlab/jupyterlab/issues/11754
+ */
+const menuPlugin: JupyterFrontEndPlugin<void> = {
+  id: '@retrolab/notebook-extension:menu-plugin',
+  autoStart: true,
+  requires: [IMainMenu, ITranslator],
+  activate: (
+    app: JupyterFrontEnd,
+    mainMenu: IMainMenu,
+    translator: ITranslator
+  ) => {
+    const { commands } = app;
+    const trans = translator.load('retrolab');
+
+    const cellTypeSubmenu = new Menu({ commands });
+    cellTypeSubmenu.title.label = trans._p('menu', 'Cell Type');
+    [
+      'notebook:change-cell-to-code',
+      'notebook:change-cell-to-markdown',
+      'notebook:change-cell-to-raw'
+    ].forEach(command => {
+      cellTypeSubmenu.addItem({
+        command
+      });
+    });
+
+    mainMenu.runMenu.addItem({ type: 'separator', rank: 1000 });
+    mainMenu.runMenu.addItem({
+      type: 'submenu',
+      submenu: cellTypeSubmenu,
+      rank: 1010
+    });
+  }
+};
+
+/**
+ * A plugin to add an extra shortcut to execute a cell in place via Cmd-Enter on Mac.
+ * TODO: switch to settings define menus when fixed upstream: https://github.com/jupyterlab/jupyterlab/issues/11754
+ */
+const runShortcut: JupyterFrontEndPlugin<void> = {
+  id: '@retrolab/notebook-extension:run-shortcut',
+  autoStart: true,
+  activate: (app: JupyterFrontEnd) => {
+    app.commands.addKeyBinding({
+      command: 'notebook:run-cell',
+      keys: ['Accel Enter'],
+      selector: '.jp-Notebook:focus'
+    });
+
+    app.commands.addKeyBinding({
+      command: 'notebook:run-cell',
+      keys: ['Accel Enter'],
+      selector: '.jp-Notebook.jp-mod-editMode'
+    });
+  }
+};
+
+/**
+ * A plugin to enable scrolling for outputs by default.
+ * Mimic the logic from the classic notebook, as found here:
+ * https://github.com/jupyter/notebook/blob/a9a31c096eeffe1bff4e9164c6a0442e0e13cdb3/notebook/static/notebook/js/outputarea.js#L96-L120
+ */
+const scrollOutput: JupyterFrontEndPlugin<void> = {
+  id: '@retrolab/notebook-extension:scroll-output',
+  autoStart: true,
+  requires: [INotebookTracker],
+  optional: [ISettingRegistry],
+  activate: async (
+    app: JupyterFrontEnd,
+    tracker: INotebookTracker,
+    settingRegistry: ISettingRegistry | null
+  ) => {
+    const autoScrollThreshold = 100;
+    let autoScrollOutputs = true;
+
+    // decide whether to scroll the output of the cell based on some heuristics
+    const autoScroll = (cell: CodeCell) => {
+      if (!autoScrollOutputs) {
+        // bail if disabled via the settings
+        return;
+      }
+      const { outputArea } = cell;
+      // respect cells with an explicit scrolled state
+      const scrolled = cell.model.metadata.get('scrolled');
+      if (scrolled !== undefined) {
+        return;
+      }
+      const { node } = outputArea;
+      const height = node.scrollHeight;
+      const fontSize = parseFloat(node.style.fontSize.replace('px', ''));
+      const lineHeight = (fontSize || 14) * 1.3;
+      // do not set via cell.outputScrolled = true, as this would
+      // otherwise synchronize the scrolled state to the notebook metadata
+      const scroll = height > lineHeight * autoScrollThreshold;
+      cell.toggleClass(SCROLLED_OUTPUTS_CLASS, scroll);
+    };
+
+    tracker.widgetAdded.connect((sender, notebook) => {
+      notebook.model?.cells.changed.connect((sender, changed) => {
+        // process new cells only
+        if (!(changed.type === 'add')) {
+          return;
+        }
+        const [cellModel] = changed.newValues;
+        notebook.content.widgets.forEach(cell => {
+          if (cell.model.id === cellModel.id && cell.model.type === 'code') {
+            const codeCell = cell as CodeCell;
+            codeCell.outputArea.model.changed.connect(() =>
+              autoScroll(codeCell)
+            );
+          }
+        });
+      });
+
+      // when the notebook widget is created, process all the cells
+      // TODO: investigate why notebook.content.fullyRendered is not enough
+      notebook.sessionContext.ready.then(() => {
+        notebook.content.widgets.forEach(cell => {
+          if (cell.model.type === 'code') {
+            autoScroll(cell as CodeCell);
+          }
+        });
+      });
+    });
+
+    if (settingRegistry) {
+      const loadSettings = settingRegistry.load(scrollOutput.id);
+      const updateSettings = (settings: ISettingRegistry.ISettings): void => {
+        autoScrollOutputs = settings.get('autoScrollOutputs')
+          .composite as boolean;
+      };
+
+      Promise.all([loadSettings, app.restored])
+        .then(([settings]) => {
+          updateSettings(settings);
+          settings.changed.connect(settings => {
+            updateSettings(settings);
+          });
+        })
+        .catch((reason: Error) => {
+          console.error(reason.message);
+        });
+    }
+  }
+};
+
+/**
  * Export the plugins as default.
  */
 const plugins: JupyterFrontEndPlugin<any>[] = [
   checkpoints,
   kernelLogo,
-  kernelStatus
+  kernelStatus,
+  menuPlugin,
+  runShortcut,
+  scrollOutput
 ];
 
 export default plugins;
