@@ -8,7 +8,7 @@
 
 ### Maintenance and upkeep improvements
 
-- [0.3.x] Update to JupyterLab 3.2.9 [#345](https://github.com/jupyterlab/retrolab/pull/345) ([@jtpio](https://github.com/jtpio))
+- Update to JupyterLab 3.2.9 [#345](https://github.com/jupyterlab/retrolab/pull/345) ([@jtpio](https://github.com/jtpio))
 
 ### Contributors to this release
 
