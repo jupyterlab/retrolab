@@ -1,6 +1,6 @@
 {
   "name": "@retrolab/docmanager-extension",
-  "version": "0.3.18",
+  "version": "0.3.19",
   "description": "RetroLab - Document Manager Extension",
   "homepage": "https://github.com/jupyterlab/retrolab",
   "bugs": {
