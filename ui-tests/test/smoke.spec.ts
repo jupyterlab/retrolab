@@ -39,7 +39,7 @@ test.describe('Smoke', () => {
     await notebook.fill('//textarea', 'math.pi');
 
     // Run the cell
-    await runAndAdvance(page);
+    await runAndAdvance(notebook);
 
     // Enter code in the next cell
     await notebook.fill(
@@ -48,7 +48,7 @@ test.describe('Smoke', () => {
     );
 
     // Run the cell
-    await runAndAdvance(page);
+    await runAndAdvance(notebook);
 
     // Save the notebook
     // TODO: re-enable after fixing the name on save dialog?
