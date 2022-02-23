@@ -155,6 +155,7 @@ const launchButtons: JupyterFrontEndPlugin<void> = {
         panel => {
           const menubar = new MenuBar();
           menubar.addMenu(switcher);
+          menubar.addClass('jp-InterfaceSwitcher');
           return menubar;
         }
       );
