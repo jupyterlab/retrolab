@@ -64,7 +64,8 @@
   },
   "jupyterlab": {
     "extension": true,
-    "outputDir": "../../retrolab/labextension"
+    "outputDir": "../../retrolab/labextension",
+    "schemaDir": "schema"
   },
   "styleModule": "style/index.js"
 }
