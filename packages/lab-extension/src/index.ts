@@ -65,7 +65,8 @@ const launchButtons: JupyterFrontEndPlugin<void> = {
     ICommandPalette,
     IMainMenu,
     IRetroShell,
-    ILabShell
+    ILabShell,
+    IToolbarWidgetRegistry
   ],
   activate: (
     app: JupyterFrontEnd,
