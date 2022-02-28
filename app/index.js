@@ -85,8 +85,7 @@ async function main() {
         '@jupyterlab/apputils-extension:state',
         '@jupyterlab/apputils-extension:themes',
         '@jupyterlab/apputils-extension:themes-palette-menu',
-        // TODO: rename to @jupyterlab/ when fixed and released upstream
-        '@jupyter/apputils-extension:toolbar-registry'
+        '@jupyterlab/apputils-extension:toolbar-registry'
       ].includes(id)
     ),
     require('@jupyterlab/codemirror-extension').default.filter(({ id }) =>
