@@ -2,6 +2,22 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.3.20
+
+([Full Changelog](https://github.com/jupyterlab/retrolab/compare/v0.3.19...c15e26b4773e4866b86bc4125ec9078d1f1d1193))
+
+### Enhancements made
+
+- Update to JupyterLab 3.3.0 [#351](https://github.com/jupyterlab/retrolab/pull/351) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlab/retrolab/graphs/contributors?from=2022-02-04&to=2022-03-03&type=c))
+
+[@github-actions](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Agithub-actions+updated%3A2022-02-04..2022-03-03&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ajtpio+updated%3A2022-02-04..2022-03-03&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.3.19
 
 ([Full Changelog](https://github.com/jupyterlab/retrolab/compare/v0.3.18...f1747296f741a26d6c404120106e3f7902eb830f))
@@ -15,8 +31,6 @@
 ([GitHub contributors page for this release](https://github.com/jupyterlab/retrolab/graphs/contributors?from=2022-01-27&to=2022-02-04&type=c))
 
 [@github-actions](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Agithub-actions+updated%3A2022-01-27..2022-02-04&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlab%2Fretrolab+involves%3Ajtpio+updated%3A2022-01-27..2022-02-04&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.3.18
 
