@@ -18,6 +18,14 @@
 [vs Other Jupyter Frontends](#relation-to-other-jupyter-frontends) |
 [Community Guidelines](#community-guidelines-and-code-of-conduct)
 
+## ⚠️ RetroLab and Notebook v7 ⚠️
+
+The RetroLab code base has now been integrated in the Jupyter Notebook GitHub repository: https://github.com/jupyter/notebook
+
+This means that development is now happening in https://github.com/jupyter/notebook. Over the next weeks, we plan to triage the opened issues in the RetroLab repository, and transfer them to the Notebook repo when relevant.
+
+Check out the Notebook v7 JEP for more information: https://jupyter.org/enhancement-proposals/79-notebook-v7/notebook-v7.html
+
 ## Introduction
 
 `RetroLab` (also known as _JupyterLab Retro_, previously called _JupyterLab
