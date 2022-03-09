@@ -22,7 +22,7 @@
 
 The RetroLab code base has now been integrated in the Jupyter Notebook GitHub repository: https://github.com/jupyter/notebook
 
-This means that development is now happening in https://github.com/jupyter/notebook. Over the next weeks, we plan to triage the opened issues in the RetroLab repository, and transfer them to the Notebook repo when relevant.
+Which means development is now happening in https://github.com/jupyter/notebook. Over the next weeks, we plan to triage the open issues in the RetroLab repository, and transfer them to the Notebook repo when relevant.
 
 Check out the Notebook v7 JEP for more information: https://jupyter.org/enhancement-proposals/79-notebook-v7/notebook-v7.html
 
