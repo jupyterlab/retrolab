@@ -39,13 +39,13 @@
     "watch": "tsc -b --watch"
   },
   "dependencies": {
-    "@jupyterlab/application": "^3.3.0",
-    "@jupyterlab/apputils": "^3.3.0",
-    "@jupyterlab/cells": "^3.3.0",
-    "@jupyterlab/docmanager": "^3.3.0",
-    "@jupyterlab/notebook": "^3.3.0",
-    "@jupyterlab/settingregistry": "^3.3.0",
-    "@jupyterlab/translation": "^3.3.0",
+    "@jupyterlab/application": "^3.4.0",
+    "@jupyterlab/apputils": "^3.4.0",
+    "@jupyterlab/cells": "^3.4.0",
+    "@jupyterlab/docmanager": "^3.4.0",
+    "@jupyterlab/notebook": "^3.4.0",
+    "@jupyterlab/settingregistry": "^3.4.0",
+    "@jupyterlab/translation": "^3.4.0",
     "@lumino/polling": "^1.6.0",
     "@lumino/widgets": "^1.23.0",
     "@retrolab/application": "^0.3.20"
