@@ -159,7 +159,6 @@
     "name": "RetroLab",
     "extensions": [
       "@retrolab/application-extension",
-      "@retrolab/cell-toolbar-extension",
       "@retrolab/console-extension",
       "@retrolab/docmanager-extension",
       "@retrolab/documentsearch-extension",
@@ -169,6 +168,7 @@
       "@retrolab/tree-extension",
       "@jupyterlab/application-extension",
       "@jupyterlab/apputils-extension",
+      "@jupyterlab/cell-toolbar-extension",
       "@jupyterlab/codemirror-extension",
       "@jupyterlab/completer-extension",
       "@jupyterlab/console-extension",
