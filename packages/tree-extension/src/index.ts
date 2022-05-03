@@ -7,7 +7,7 @@ import {
 } from '@jupyterlab/application';
 import { CommandToolbarButton } from '@jupyterlab/apputils';
 
-import { IFileBrowserFactory } from '@jupyterlab/filebrowser';
+import { IFileBrowserFactory, Uploader } from '@jupyterlab/filebrowser';
 
 import { IRunningSessionManagers, RunningSessions } from '@jupyterlab/running';
 
@@ -133,6 +133,52 @@ const newTerminal: JupyterFrontEndPlugin<void> = {
 };
 
 /**
+ * A plugin to add the default toolbar buttons from JupyterLab.
+ * Note: this is not using the settings system because JupyterLab 3.4 does not include
+ * this fix: https://github.com/jupyterlab/jupyterlab/pull/11938
+ */
+const defaultButtons: JupyterFrontEndPlugin<void> = {
+  id: '@retrolab/tree-extension:default-buttons',
+  autoStart: true,
+  requires: [IFileBrowserFactory, ITranslator],
+  activate: (
+    app: JupyterFrontEnd,
+    filebrowser: IFileBrowserFactory,
+    translator: ITranslator
+  ) => {
+    const { commands } = app;
+    const browser = filebrowser.defaultBrowser;
+    const model = browser.model;
+
+    browser.toolbar.insertItem(
+      4,
+      'new-directory',
+      new CommandToolbarButton({
+        commands,
+        label: '',
+        id: 'filebrowser:create-new-directory'
+      })
+    );
+
+    browser.toolbar.insertItem(
+      5,
+      'uploader',
+      new Uploader({ model, translator })
+    );
+
+    browser.toolbar.insertItem(
+      6,
+      'refresh',
+      new CommandToolbarButton({
+        commands,
+        label: '',
+        id: 'filebrowser:refresh'
+      })
+    );
+  }
+};
+
+/**
  * A plugin to add the file browser widget to an ILabShell
  */
 const browserWidget: JupyterFrontEndPlugin<void> = {
@@ -180,6 +226,7 @@ const plugins: JupyterFrontEndPlugin<any>[] = [
   newFiles,
   newConsole,
   newTerminal,
+  defaultButtons,
   browserWidget
 ];
 export default plugins;
