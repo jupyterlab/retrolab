@@ -1405,6 +1405,33 @@
     typescript "~4.1.3"
     verdaccio "^5.1.1"
 
+"@jupyterlab/cell-toolbar-extension@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/cell-toolbar-extension/-/cell-toolbar-extension-3.4.0.tgz#a96d7a301a6c259a839db95b7ed742162afcd412"
+  integrity sha512-wekrDrYgpAoGnBmF2lWv+DfGZ9qO4abAI9Qr3qyBEaXcAg1twxjlCAkGMxrjkwuDsrXl29btuJojXrOcwCrIeA==
+  dependencies:
+    "@jupyterlab/application" "^3.4.0"
+    "@jupyterlab/apputils" "^3.4.0"
+    "@jupyterlab/cell-toolbar" "^3.4.0"
+    "@jupyterlab/settingregistry" "^3.4.0"
+    "@jupyterlab/translation" "^3.4.0"
+
+"@jupyterlab/cell-toolbar@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/cell-toolbar/-/cell-toolbar-3.4.0.tgz#503bd0504021c75f90644b7ac50332d5683e32a6"
+  integrity sha512-R774QvuUUf/75NdvuPYHeBHqMI7bOf6pumcE+zUPFCAlPHTRoGomJ7sLbWavJAuWtUqoL+1mmLpApkzUAjfLSA==
+  dependencies:
+    "@jupyterlab/apputils" "^3.4.0"
+    "@jupyterlab/cells" "^3.4.0"
+    "@jupyterlab/docregistry" "^3.4.0"
+    "@jupyterlab/notebook" "^3.4.0"
+    "@jupyterlab/observables" "^4.4.0"
+    "@lumino/algorithm" "^1.9.0"
+    "@lumino/commands" "^1.19.0"
+    "@lumino/disposable" "^1.10.0"
+    "@lumino/signaling" "^1.10.0"
+    "@lumino/widgets" "^1.30.0"
+
 "@jupyterlab/cells@^3.4.0":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@jupyterlab/cells/-/cells-3.4.0.tgz#cbbf9771dc75c695ac14e536fa312fc2af5d242d"

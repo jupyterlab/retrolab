@@ -158,6 +158,7 @@ async function main() {
     }
     case 'notebooks': {
       baseMods = baseMods.concat([
+        require('@jupyterlab/cell-toolbar-extension'),
         require('@jupyterlab/completer-extension').default.filter(({ id }) =>
           ['@jupyterlab/completer-extension:notebooks'].includes(id)
         ),
