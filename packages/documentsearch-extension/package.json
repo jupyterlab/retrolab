@@ -39,9 +39,9 @@
     "watch": "tsc -b --watch"
   },
   "dependencies": {
-    "@jupyterlab/application": "^3.3.0",
-    "@jupyterlab/documentsearch": "^3.3.0",
-    "@lumino/widgets": "^1.23.0",
+    "@jupyterlab/application": "^3.4.0",
+    "@jupyterlab/documentsearch": "^3.4.0",
+    "@lumino/widgets": "^1.31.1",
     "@retrolab/application": "^0.3.20"
   },
   "devDependencies": {

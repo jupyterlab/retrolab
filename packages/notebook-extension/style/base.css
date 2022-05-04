@@ -43,6 +43,14 @@ body[data-retro='notebooks'] .jp-Notebook {
 
 body[data-retro='notebooks'] .jp-Notebook.jp-mod-scrollPastEnd::after {
   background: var(--jp-layout-color0);
+  min-height: var(--jp-notebook-padding);
+}
+
+/* Cell toolbar adjustements */
+
+body[data-retro='notebooks'] .jp-cell-toolbar {
+  background: unset;
+  top: unset;
 }
 
 /* ---- */
