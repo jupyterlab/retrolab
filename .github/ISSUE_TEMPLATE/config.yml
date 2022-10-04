@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Do you have a feature request? See Notebook 7.
+    url: https://github.com/jupyter/notebook
+    about: The RetroLab code base has now been integrated in the Jupyter Notebook GitHub repository. Development is now happening in the Notebook repository.
