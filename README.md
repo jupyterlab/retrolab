@@ -24,6 +24,18 @@ The RetroLab code base has now been integrated in the Jupyter Notebook GitHub re
 
 Which means development is now happening in https://github.com/jupyter/notebook. Over the next weeks, we plan to triage the open issues in the RetroLab repository, and transfer them to the Notebook repo when relevant.
 
+You can install Notebook 7 with `pip`:
+
+```
+pip install --pre notebook
+```
+
+Once the final version of Notebook 7 is released, you can simply install Notebook 7 with:
+
+```
+pip install notebook
+```
+
 Check out the Notebook v7 JEP for more information: https://jupyter.org/enhancement-proposals/79-notebook-v7/notebook-v7.html
 
 ## Introduction
